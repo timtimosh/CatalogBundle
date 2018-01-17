@@ -1,5 +1,5 @@
 <?php
-namespace CatalogBundle\Interfaces;
+namespace Mtt\CatalogBundle\Interfaces;
 
 interface BasicEntityInterface
 {

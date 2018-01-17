@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use CatalogBundle\Interfaces\BasicEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,12 +9,12 @@ use ShopCoreBundle\Interfaces\Catalog\ProductCharInterface;
 use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
 
 /**
- * MttCatalogProductCharsCollection
+ * ProductCharsCollection
  *
  * @ORM\Table(name="mtt_catalog_product_chars_collection", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_product_id_char_setup_id_char_val_2801_22", columns={"product", "char_val"})}, indexes={@ORM\Index(name="idx_id_img_2801_23", columns={"img"}), @ORM\Index(name="IDX_37082EDF9134D09E", columns={"product"})})
  * @ORM\Entity
  */
-class MttCatalogProductCharsCollection implements ProductCharInterface, BasicEntityInterface
+class ProductCharsCollection implements ProductCharInterface, BasicEntityInterface
 {
     /**
      * @var string
@@ -37,9 +37,9 @@ class MttCatalogProductCharsCollection implements ProductCharInterface, BasicEnt
 
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogCharValues
+     * @var \Mtt\CatalogBundle\Entity\CharValues
      *
-     * @ORM\ManyToOne(targetEntity="MttCatalogCharValues")
+     * @ORM\ManyToOne(targetEntity="CharValues")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val", nullable=false)
      * })
@@ -47,9 +47,9 @@ class MttCatalogProductCharsCollection implements ProductCharInterface, BasicEnt
     private $charValue;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProductImage
+     * @var \Mtt\CatalogBundle\Entity\ProductImage
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogProductImage")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductImage")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="img", referencedColumnName="id_img")
      * })
@@ -57,9 +57,9 @@ class MttCatalogProductCharsCollection implements ProductCharInterface, BasicEnt
     private $img;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProduct
+     * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogProduct", inversedBy="chars_value_collection")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product", inversedBy="chars_value_collection")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product", nullable=false)
      * })
@@ -107,17 +107,17 @@ class MttCatalogProductCharsCollection implements ProductCharInterface, BasicEnt
     }
 
     /**
-     * @return MttCatalogProductImage
+     * @return ProductImage
      */
-    public function getImg(): MttCatalogProductImage
+    public function getImg(): ProductImage
     {
         return $this->img;
     }
 
     /**
-     * @param MttCatalogProductImage $img
+     * @param ProductImage $img
      */
-    public function setImg(MttCatalogProductImage $img)
+    public function setImg(ProductImage $img)
     {
         $this->img = $img;
     }

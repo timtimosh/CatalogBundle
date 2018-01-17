@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle;
+namespace Mtt\CatalogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

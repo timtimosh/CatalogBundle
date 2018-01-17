@@ -1,5 +1,5 @@
 <?php
-namespace CatalogBundle\Exceptions;
+namespace Mtt\CatalogBundle\Exceptions;
 
 class FailedToSaveProductException extends \Exception
 {

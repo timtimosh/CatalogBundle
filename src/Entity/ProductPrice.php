@@ -1,16 +1,16 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MttCatalogProductPrice
+ * ProductPrice
  *
  * @ORM\Table(name="mtt_catalog_product_price", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_id_price_1969_15", columns={"id_price"}), @ORM\UniqueConstraint(name="idx_UNIQUE_id_price_date_1969_16", columns={"id_price", "date"})})
  * @ORM\Entity
  */
-class MttCatalogProductPrice
+class ProductPrice
 {
     /**
      * @var string

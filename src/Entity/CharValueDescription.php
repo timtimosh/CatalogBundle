@@ -1,30 +1,44 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MttCatalogCategoryDescription
+ * CharValueDescription
  *
- * @ORM\Table(name="mtt_catalog_category_description")
+ * @ORM\Table(name="mtt_catalog_char_value_description", indexes={@ORM\Index(name="idx_id_char_val_9685_06", columns={"char_val"})})
  * @ORM\Entity
  */
-class MttCatalogCategoryDescription
+class CharValueDescription
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="name_alt", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name_alt", type="string", length=50, nullable=true)
      */
     private $nameAlt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description_short", type="text", length=255, nullable=true)
+     * @ORM\Column(name="url", type="string", length=64, nullable=true)
      */
-    private $descriptionShort;
+    private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short_description", type="text", length=255, nullable=true)
+     */
+    private $shortDescription;
 
     /**
      * @var string
@@ -64,7 +78,7 @@ class MttCatalogCategoryDescription
     /**
      * @var string
      *
-     * @ORM\Column(name="tag", type="text", length=255, nullable=true)
+     * @ORM\Column(name="tag", type="string", length=255, nullable=true)
      */
     private $tag;
 
@@ -76,16 +90,23 @@ class MttCatalogCategoryDescription
     private $imagePath;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogCategory
+     * @var integer
      *
+     * @ORM\Column(name="id_char_seo", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="CatalogBundle\Entity\MttCatalogCategory")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCharSeo;
+
+    /**
+     * @var \Mtt\CatalogBundle\Entity\CharValues
+     *
+     * @ORM\ManyToOne(targetEntity="CharValues")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_category", referencedColumnName="id_category")
+     *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val")
      * })
      */
-    private $idCategory;
+    private $charVal;
 
 
 }

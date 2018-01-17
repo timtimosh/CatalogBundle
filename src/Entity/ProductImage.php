@@ -1,16 +1,16 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MttCatalogProductImage
+ * ProductImage
  *
  * @ORM\Table(name="mtt_catalog_product_image", indexes={@ORM\Index(name="idx_id_product_1329_12", columns={"id_product"}), @ORM\Index(name="idx_id_spacification_1329_13", columns={"id_specification"})})
  * @ORM\Entity
  */
-class MttCatalogProductImage
+class ProductImage
 {
     /**
      * @var string
@@ -71,9 +71,9 @@ class MttCatalogProductImage
     private $idImg;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProduct
+     * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogProduct")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_product", referencedColumnName="id_product")
      * })
@@ -81,9 +81,9 @@ class MttCatalogProductImage
     private $idProduct;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProductCharsCollection
+     * @var \Mtt\CatalogBundle\Entity\ProductCharsCollection
      *
-     * @ORM\ManyToOne(targetEntity="MttCatalogProductCharsCollection")
+     * @ORM\ManyToOne(targetEntity="ProductCharsCollection")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_specification", referencedColumnName="id")
      * })

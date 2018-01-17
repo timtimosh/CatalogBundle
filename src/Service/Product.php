@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Service;
+namespace Mtt\CatalogBundle\Service;
 
 use CatalogBundle\Entity\MttCatalogProduct;
 use CatalogBundle\Entity\MttCatalogProductDescription;

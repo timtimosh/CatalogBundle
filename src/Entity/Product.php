@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,13 +9,13 @@ use CatalogBundle\Interfaces\BasicEntityInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
- * MttCatalogProduct
+ * Product
  *
  * @ORM\Table(name="mtt_catalog_product", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_id_erp_8901_03", columns={"id_erp"})})
  * @ORM\Entity(repositoryClass="CatalogBundle\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class MttCatalogProduct implements Catalog\ProductInterface, BasicEntityInterface
+class Product implements Catalog\ProductInterface, BasicEntityInterface
 {
     const ONSITE = 0;
     const NOT_ONSITE = 1;
@@ -98,12 +98,12 @@ class MttCatalogProduct implements Catalog\ProductInterface, BasicEntityInterfac
     protected $idProduct;
 
     /**
-     * @ORM\OneToOne(targetEntity="CatalogBundle\Entity\MttCatalogProductDescription", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductDescription", mappedBy="product", cascade={"persist", "remove"})
      */
     protected $description_entity;
 
     /**
-     * @ORM\OneToMany(targetEntity="MttCatalogProductCharsCollection", mappedBy="product", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="ProductCharsCollection", mappedBy="product", cascade={"remove"})
      */
     protected $chars_value_collection;
 
@@ -249,12 +249,12 @@ class MttCatalogProduct implements Catalog\ProductInterface, BasicEntityInterfac
 
     /**
      * Do not use this method dorectly it`s only purpose to solve the service
-     * @return MttCatalogProductDescription
+     * @return ProductDescription
      */
-    public function getDescriptionEntity():MttCatalogProductDescription
+    public function getDescriptionEntity():ProductDescription
     {
         if(null === $this->description_entity){
-            $this->description_entity = new MttCatalogProductDescription();
+            $this->description_entity = new ProductDescription();
             $this->description_entity->setProduct($this);
         }
         return $this->description_entity;

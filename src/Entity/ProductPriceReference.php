@@ -1,16 +1,16 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MttCatalogProductPriceReference
+ * ProductPriceReference
  *
  * @ORM\Table(name="mtt_catalog_product_price_reference", indexes={@ORM\Index(name="idx_id_product_id_char_val_id_price_2269_17", columns={"product", "char_val", "price"}), @ORM\Index(name="IDX_81A80C2DDD7ADDD", columns={"product"})})
  * @ORM\Entity
  */
-class MttCatalogProductPriceReference
+class ProductPriceReference
 {
     /**
      * @var integer
@@ -22,9 +22,9 @@ class MttCatalogProductPriceReference
     private $idCharRef;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProduct
+     * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogProduct")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      * })
@@ -32,9 +32,9 @@ class MttCatalogProductPriceReference
     private $product;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogCharValues
+     * @var \Mtt\CatalogBundle\Entity\CharValues
      *
-     * @ORM\ManyToOne(targetEntity="MttCatalogCharValues")
+     * @ORM\ManyToOne(targetEntity="CharValues")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val")
      * })
@@ -42,9 +42,9 @@ class MttCatalogProductPriceReference
     private $charVal;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProductPrice
+     * @var \Mtt\CatalogBundle\Entity\ProductPrice
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogProductPrice")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductPrice")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="price", referencedColumnName="id_price")
      * })

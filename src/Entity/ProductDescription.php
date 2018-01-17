@@ -1,16 +1,16 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MttCatalogProductDescription
+ * ProductDescription
  *
  * @ORM\Table(name="mtt_catalog_product_description", indexes={@ORM\Index(name="idx_main_image_0982_11", columns={"main_image"})})
  * @ORM\Entity
  */
-class MttCatalogProductDescription
+class ProductDescription
 {
     /**
      * @var string
@@ -76,9 +76,9 @@ class MttCatalogProductDescription
     private $tag;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProduct
+     * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\OneToOne(targetEntity="CatalogBundle\Entity\MttCatalogProduct", inversedBy="description_entity", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Entity\Product", inversedBy="description_entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      */
     private $product;
@@ -93,9 +93,9 @@ class MttCatalogProductDescription
     private $id;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProductImage
+     * @var \Mtt\CatalogBundle\Entity\ProductImage
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogProductImage")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductImage")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="main_image", referencedColumnName="id_img", nullable=true)
      * })
@@ -103,17 +103,17 @@ class MttCatalogProductDescription
     private $mainImage;
 
     /**
-     * @return MttCatalogProduct
+     * @return Product
      */
-    public function getProduct(): MttCatalogProduct
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
     /**
-     * @param MttCatalogProduct $product
+     * @param Product $product
      */
-    public function setProduct(MttCatalogProduct $product)
+    public function setProduct(Product $product)
     {
         $this->product = $product;
     }
@@ -247,17 +247,17 @@ class MttCatalogProductDescription
     }
 
     /**
-     * @return MttCatalogProductImage
+     * @return ProductImage
      */
-    public function getMainImage(): MttCatalogProductImage
+    public function getMainImage(): ProductImage
     {
         return $this->mainImage;
     }
 
     /**
-     * @param MttCatalogProductImage $mainImage
+     * @param ProductImage $mainImage
      */
-    public function setMainImage(MttCatalogProductImage $mainImage)
+    public function setMainImage(ProductImage $mainImage)
     {
         $this->mainImage = $mainImage;
     }

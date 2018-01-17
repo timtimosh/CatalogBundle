@@ -1,5 +1,6 @@
 {
   "name": "mtt/catalog-bundle",
+  "type": "symfony-bundle",
   "authors": [
     {
       "name": "Volodymyr Tymoshenko",
@@ -8,11 +9,11 @@
   ],
   "require": {
 	"php": ">=7.0",
-	"symfony/symfony": ">=3.4.0"
+	"symfony/symfony": "~3.4.0"
    },
   "autoload": {
     "psr-4": {
-      "CatalogBundle\\": "src/"
+      "Mtt\\CatalogBundle\\": "src/"
     }
   }
 }

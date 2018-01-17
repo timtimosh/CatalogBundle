@@ -1,5 +1,5 @@
 <?php
-namespace CatalogBundle\Controller;
+namespace Mtt\CatalogBundle\Controller;
 
 use CatalogBundle\Entity\MttCatalogProduct;
 use CatalogBundle\Service\Product;

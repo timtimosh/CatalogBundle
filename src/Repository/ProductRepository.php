@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Repository;
+namespace Mtt\CatalogBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 class ProductRepository extends EntityRepository
@@ -9,7 +9,7 @@ class ProductRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT p FROM CatalogBundle:MttCatalogProduct as p'
+                'SELECT p FROM CatalogBundle:Product as p'
             )
             ->getResult();
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Interfaces;
+namespace Mtt\CatalogBundle\Interfaces;
 use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
 
 interface ProductServiceInterface

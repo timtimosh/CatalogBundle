@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -8,12 +8,12 @@ use ShopCoreBundle\Interfaces\Catalog\CharInterface;
 use CatalogBundle\Interfaces\BasicEntityInterface;
 
 /**
- * MttCatalogChar
+ * Char
  *
  * @ORM\Table(name="mtt_catalog_char", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_id_erp_9259_04", columns={"id_erp"})}, indexes={@ORM\Index(name="idx_active_926_05", columns={"active"})})
  * @ORM\Entity
  */
-class MttCatalogChar implements CharInterface, BasicEntityInterface
+class Char implements CharInterface, BasicEntityInterface
 {
     const OPTION_VIEW_TYPE_SELECT = 0;
     const OPTION_VIEW_TYPE_RADIO = 1;
@@ -103,7 +103,7 @@ class MttCatalogChar implements CharInterface, BasicEntityInterface
     private $url_key;
 
     /**
-     * @ORM\OneToMany(targetEntity="MttCatalogCharValues", mappedBy="value_collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CharValues", mappedBy="value_collection", cascade={"persist", "remove"})
      */
     protected $value_collection;
 

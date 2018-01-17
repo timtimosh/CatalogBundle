@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Tests\Functional\ClearDbAndDoctrineEntitiesTest;
+namespace Mtt\CatalogBundle\Tests\Functional\ClearDbAndDoctrineEntitiesTest;
 
 
 use Doctrine\Common\Collections\ArrayCollection;

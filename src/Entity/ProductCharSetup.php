@@ -1,16 +1,16 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MttCatalogProductCharSetup
+ * ProductCharSetup
  *
  * @ORM\Table(name="mtt_catalog_product_char_setup", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_id_product_id_char_0301_07", columns={"id_product", "id_char"})}, indexes={@ORM\Index(name="idx_id_product_priority_0301_08", columns={"id_product", "priority"}), @ORM\Index(name="idx_id_char_0301_09", columns={"id_char"}), @ORM\Index(name="IDX_7A0AD297DD7ADDD", columns={"id_product"})})
  * @ORM\Entity
  */
-class MttCatalogProductCharSetup
+class ProductCharSetup
 {
     /**
      * @var string
@@ -36,9 +36,9 @@ class MttCatalogProductCharSetup
     private $idCharSetup;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogProduct
+     * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogProduct")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_product", referencedColumnName="id_product")
      * })
@@ -46,9 +46,9 @@ class MttCatalogProductCharSetup
     private $idProduct;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogChar
+     * @var \Mtt\CatalogBundle\Entity\Char
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogChar")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Char")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_char", referencedColumnName="id_char")
      * })

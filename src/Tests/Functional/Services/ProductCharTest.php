@@ -1,6 +1,6 @@
 <?php
 
-namespace CatalogBundle\Tests\Functional\Entities;
+namespace Mtt\CatalogBundle\Tests\Functional\Entities;
 
 
 use Doctrine\Common\Collections\ArrayCollection;

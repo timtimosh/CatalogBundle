@@ -1,18 +1,18 @@
 <?php
 
-namespace CatalogBundle\Entity;
+namespace Mtt\CatalogBundle\Entity;
 
 use CatalogBundle\Interfaces\BasicEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use ShopCoreBundle\Interfaces\Catalog\CharValueInterface;
 
 /**
- * MttCatalogCharValues
+ * CharValues
  *
  * @ORM\Table(name="mtt_catalog_char_values", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_id_char_value_0629_10", columns={"characteristic", "value"})}, indexes={@ORM\Index(name="IDX_724A6D297DE4B9D", columns={"characteristic"})})
  * @ORM\Entity
  */
-class MttCatalogCharValues implements BasicEntityInterface, CharValueInterface
+class CharValues implements BasicEntityInterface, CharValueInterface
 {
     /**
      * @var string
@@ -38,9 +38,9 @@ class MttCatalogCharValues implements BasicEntityInterface, CharValueInterface
     private $idCharVal;
 
     /**
-     * @var \CatalogBundle\Entity\MttCatalogChar
+     * @var \Mtt\CatalogBundle\Entity\Char
      *
-     * @ORM\ManyToOne(targetEntity="CatalogBundle\Entity\MttCatalogChar")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Char")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id_char")
      * })
@@ -88,17 +88,17 @@ class MttCatalogCharValues implements BasicEntityInterface, CharValueInterface
     }
 
     /**
-     * @return MttCatalogChar
+     * @return Char
      */
-    protected function getChar(): MttCatalogChar
+    protected function getChar(): Char
     {
         return $this->characteristic;
     }
 
     /**
-     * @param MttCatalogChar $char
+     * @param Char $char
      */
-    public function setChar(MttCatalogChar $char)
+    public function setChar(Char $char)
     {
         $this->characteristic = $char;
     }
