@@ -4,7 +4,7 @@ namespace Mtt\CatalogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class CatalogBundle extends Bundle
+class MttCatalogBundle extends Bundle
 {
 
 }
