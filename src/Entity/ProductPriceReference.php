@@ -4,13 +4,7 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * ProductPriceReference
- *
- * @ORM\Table(name="mtt_catalog_product_price_reference", indexes={@ORM\Index(name="idx_id_product_id_char_val_id_price_2269_17", columns={"product", "char_val", "price"}), @ORM\Index(name="IDX_81A80C2DDD7ADDD", columns={"product"})})
- * @ORM\Entity
- */
-class ProductPriceReference
+abstract class ProductPriceReference
 {
     /**
      * @var integer
@@ -19,7 +13,7 @@ class ProductPriceReference
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idCharRef;
+    protected $idCharRef;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
@@ -29,17 +23,17 @@ class ProductPriceReference
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      * })
      */
-    private $product;
+    protected $product;
 
     /**
-     * @var \Mtt\CatalogBundle\Entity\CharValues
+     * @var \Mtt\CatalogBundle\Entity\CharValue
      *
      * @ORM\ManyToOne(targetEntity="CharValues")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val")
      * })
      */
-    private $charVal;
+    protected $charVal;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\ProductPrice
@@ -49,7 +43,7 @@ class ProductPriceReference
      *   @ORM\JoinColumn(name="price", referencedColumnName="id_price")
      * })
      */
-    private $price;
+    protected $price;
 
 
 }

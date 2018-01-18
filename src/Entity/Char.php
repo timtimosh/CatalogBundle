@@ -4,16 +4,10 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ShopCoreBundle\Interfaces\Catalog\CharInterface;
-use CatalogBundle\Interfaces\BasicEntityInterface;
+use Mtt\Core\Interfaces\Catalog\CharInterface;
+use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 
-/**
- * Char
- *
- * @ORM\Table(name="mtt_catalog_char", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_id_erp_9259_04", columns={"id_erp"})}, indexes={@ORM\Index(name="idx_active_926_05", columns={"active"})})
- * @ORM\Entity
- */
-class Char implements CharInterface, BasicEntityInterface
+abstract class Char implements CharInterface, BasicEntityInterface
 {
     const OPTION_VIEW_TYPE_SELECT = 0;
     const OPTION_VIEW_TYPE_RADIO = 1;
@@ -35,49 +29,49 @@ class Char implements CharInterface, BasicEntityInterface
      *
      * @ORM\Column(name="id_erp", type="string", length=50, nullable=true)
      */
-    private $idErp;
+    protected $idErp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=true)
      */
-    private $active = self::ACTIVE;
+    protected $active = self::ACTIVE;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="on_search", type="boolean", nullable=true)
      */
-    private $onSearch = self::ONSEARCH;
+    protected $onSearch = self::ONSEARCH;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="on_index", type="boolean", nullable=true)
      */
-    private $onIndex = self::ONINDEX;
+    protected $onIndex = self::ONINDEX;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="is_visible", type="boolean", nullable=true)
      */
-    private $isVisible = self::ISVISIBLE;
+    protected $isVisible = self::ISVISIBLE;
 
     /**
      * @var integer
@@ -86,24 +80,24 @@ class Char implements CharInterface, BasicEntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idChar;
+    protected $idChar;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="char_option_type", type="smallint")
      */
-    private $charOptionType = self::OPTION_VIEW_TYPE_SELECT;
+    protected $charOptionType = self::OPTION_VIEW_TYPE_SELECT;
 
     /**
      * @var string
      *
      * @ORM\Column(name="url_key", type="string", length=50, nullable=true)
      */
-    private $url_key;
+    protected $url_key;
 
     /**
-     * @ORM\OneToMany(targetEntity="CharValues", mappedBy="value_collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CharValue", mappedBy="value_collection", cascade={"persist", "remove"})
      */
     protected $value_collection;
 

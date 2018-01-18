@@ -2,26 +2,20 @@
 
 namespace Mtt\CatalogBundle\Entity;
 
-use CatalogBundle\Interfaces\BasicEntityInterface;
+use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use ShopCoreBundle\Interfaces\Catalog\CharValueInterface;
 use ShopCoreBundle\Interfaces\Catalog\ProductCharInterface;
 use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
 
-/**
- * ProductCharsCollection
- *
- * @ORM\Table(name="mtt_catalog_product_chars_collection", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_product_id_char_setup_id_char_val_2801_22", columns={"product", "char_val"})}, indexes={@ORM\Index(name="idx_id_img_2801_23", columns={"img"}), @ORM\Index(name="IDX_37082EDF9134D09E", columns={"product"})})
- * @ORM\Entity
- */
-class ProductCharsCollection implements ProductCharInterface, BasicEntityInterface
+abstract class ProductCharsCollection implements ProductCharInterface, BasicEntityInterface
 {
     /**
      * @var string
      *
      * @ORM\Column(name="id_erp", type="string", length=50, nullable=true)
      */
-    private $idErp;
+    protected $idErp;
 
     /**
      * @var integer
@@ -30,21 +24,21 @@ class ProductCharsCollection implements ProductCharInterface, BasicEntityInterfa
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
-    private $idCharSetup;
+    protected $idCharSetup;
 
 
     /**
-     * @var \Mtt\CatalogBundle\Entity\CharValues
+     * @var \Mtt\CatalogBundle\Entity\CharValue
      *
      * @ORM\ManyToOne(targetEntity="CharValues")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val", nullable=false)
      * })
      */
-    private $charValue;
+    protected $charValue;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\ProductImage
@@ -54,7 +48,7 @@ class ProductCharsCollection implements ProductCharInterface, BasicEntityInterfa
      *   @ORM\JoinColumn(name="img", referencedColumnName="id_img")
      * })
      */
-    private $img;
+    protected $img;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
@@ -64,7 +58,7 @@ class ProductCharsCollection implements ProductCharInterface, BasicEntityInterfa
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product", nullable=false)
      * })
      */
-    private $product;
+    protected $product;
 
     /**
      * @return string

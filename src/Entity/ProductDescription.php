@@ -4,76 +4,70 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * ProductDescription
- *
- * @ORM\Table(name="mtt_catalog_product_description", indexes={@ORM\Index(name="idx_main_image_0982_11", columns={"main_image"})})
- * @ORM\Entity
- */
-class ProductDescription
+abstract class ProductDescription
 {
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name_alt", type="string", length=255, nullable=true)
      */
-    private $nameAlt;
+    protected $nameAlt;
 
     /**
      * @var string
      *
      * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
      */
-    private $seoTitle;
+    protected $seoTitle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="seo_h1", type="string", length=255, nullable=true)
      */
-    private $seoH1;
+    protected $seoH1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="short_description", type="text", length=255, nullable=true)
      */
-    private $shortDescription;
+    protected $shortDescription;
 
     /**
      * @var string
      *
      * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
      */
-    private $metaDescription;
+    protected $metaDescription;
 
     /**
      * @var string
      *
      * @ORM\Column(name="meta_keyword", type="string", length=255, nullable=true)
      */
-    private $metaKeyword;
+    protected $metaKeyword;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tag", type="text", length=255, nullable=true)
      */
-    private $tag;
+    protected $tag;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
@@ -81,7 +75,7 @@ class ProductDescription
      * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Entity\Product", inversedBy="description_entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      */
-    private $product;
+    protected $product;
 
     /**
      * @var integer
@@ -90,7 +84,7 @@ class ProductDescription
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\ProductImage
@@ -100,7 +94,7 @@ class ProductDescription
      *   @ORM\JoinColumn(name="main_image", referencedColumnName="id_img", nullable=true)
      * })
      */
-    private $mainImage;
+    protected $mainImage;
 
     /**
      * @return Product

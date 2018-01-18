@@ -4,76 +4,71 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * CategoryDescription
- *
- * @ORM\Table(name="mtt_catalog_category_description")
- * @ORM\Entity
- */
-class CategoryDescription
+
+abstract class CategoryDescription
 {
     /**
      * @var string
      *
      * @ORM\Column(name="name_alt", type="string", length=255, nullable=true)
      */
-    private $nameAlt;
+    protected $nameAlt;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description_short", type="text", length=255, nullable=true)
      */
-    private $descriptionShort;
+    protected $descriptionShort;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
      */
-    private $seoTitle;
+    protected $seoTitle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="seo_h1", type="string", length=255, nullable=true)
      */
-    private $seoH1;
+    protected $seoH1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
      */
-    private $metaDescription;
+    protected $metaDescription;
 
     /**
      * @var string
      *
      * @ORM\Column(name="meta_keyword", type="string", length=255, nullable=true)
      */
-    private $metaKeyword;
+    protected $metaKeyword;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tag", type="text", length=255, nullable=true)
      */
-    private $tag;
+    protected $tag;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image_path", type="string", length=255, nullable=true)
      */
-    private $imagePath;
+    protected $imagePath;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\Category
@@ -85,7 +80,7 @@ class CategoryDescription
      *   @ORM\JoinColumn(name="id_category", referencedColumnName="id_category")
      * })
      */
-    private $idCategory;
+    protected $idCategory;
 
 
 }

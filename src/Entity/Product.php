@@ -4,18 +4,11 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ShopCoreBundle\Interfaces\Catalog;
-use CatalogBundle\Interfaces\BasicEntityInterface;
+use Mtt\Core\Interfaces\Catalog;
+use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
-/**
- * Product
- *
- * @ORM\Table(name="mtt_catalog_product", uniqueConstraints={@ORM\UniqueConstraint(name="idx_UNIQUE_id_erp_8901_03", columns={"id_erp"})})
- * @ORM\Entity(repositoryClass="CatalogBundle\Repository\ProductRepository")
- * @ORM\HasLifecycleCallbacks()
- */
-class Product implements Catalog\ProductInterface, BasicEntityInterface
+abstract class Product implements Catalog\ProductInterface, BasicEntityInterface
 {
     const ONSITE = 0;
     const NOT_ONSITE = 1;
