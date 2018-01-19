@@ -2,8 +2,17 @@
 
 namespace Mtt\CatalogBundle\Service;
 
+use Mtt\CatalogBundle\Interfaces\ProductInterface;
+
 class Filter implements \Mtt\Core\Interfaces\Catalog\Service\FilterInterface
 {
+    protected $filteredProductsCollection = [];
+
+    protected function __construct(ProductInterface $productService)
+    {
+        $this->filteredProductsCollection = new \SplObjectStorage();
+    }
+
     /**
      * @var string
      */

@@ -2,11 +2,11 @@
 
 namespace Mtt\CatalogBundle\Service;
 
-use Mtt\CatalogBundle\Interfaces\ProductServiceInterface;
-use Mtt\Core\Interfaces\Catalog\Entity;
 use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
+use Mtt\Core\Interfaces\Catalog\Entity;
+use Mtt\Core\Interfaces\Catalog\Service\ProductInterface as ProductService;
 
-class Product extends AbstractService implements ProductServiceInterface
+class Product extends AbstractService implements ProductService
 {
     /**
      * @inheritdoc
