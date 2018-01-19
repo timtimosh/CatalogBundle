@@ -4,9 +4,9 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
-use ShopCoreBundle\Interfaces\Catalog\CharValueInterface;
-use ShopCoreBundle\Interfaces\Catalog\ProductCharInterface;
-use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\ProductCharInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 
 abstract class ProductCharsCollection implements ProductCharInterface, BasicEntityInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Mtt\CatalogBundle\Service;
 
-use ShopCoreBundle\Interfaces\Catalog\CharInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\CharInterface;
 
 class Char extends AbstractService
 {

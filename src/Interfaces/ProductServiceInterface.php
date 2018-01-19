@@ -1,7 +1,8 @@
 <?php
 
 namespace Mtt\CatalogBundle\Interfaces;
-use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
+
+use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 
 interface ProductServiceInterface
 {

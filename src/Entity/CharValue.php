@@ -4,7 +4,7 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Mtt\Core\Interfaces\Catalog\CharValueInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
 
 abstract class CharValue implements BasicEntityInterface, CharValueInterface
 {

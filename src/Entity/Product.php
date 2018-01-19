@@ -4,11 +4,11 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Mtt\Core\Interfaces\Catalog;
+use Mtt\Core\Interfaces\Catalog\Entity;
 use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
-abstract class Product implements Catalog\ProductInterface, BasicEntityInterface
+abstract class Product implements Entity\ProductInterface, BasicEntityInterface
 {
     const ONSITE = 0;
     const NOT_ONSITE = 1;

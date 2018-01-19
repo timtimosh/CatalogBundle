@@ -2,13 +2,13 @@
 
 namespace Mtt\CatalogBundle\Service;
 
-use ShopCoreBundle\Interfaces\Catalog\CharValueInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
 
 class CharValue extends AbstractService
 {
     /**
      * @inheritdoc
-     * @return \CatalogBundle\Entity\MttCatalogChar;
+     * @return \Mtt\CatalogBundle\Entity\CharValue;
      */
     public function create():CharValueInterface
     {

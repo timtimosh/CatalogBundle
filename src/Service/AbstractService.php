@@ -2,20 +2,20 @@
 
 namespace Mtt\CatalogBundle\Service;
 
-use CatalogBundle\Exceptions\FailedToSaveProductException;
+use Mtt\CatalogBundle\Exceptions\FailedToSaveProductException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Persistence\ObjectRepository;
-use CatalogBundle\Interfaces\BasicEntityInterface;
+use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 
 abstract class AbstractService
 {
     protected $em;
     protected $entity;
 
-    public function __construct(EntityManagerInterface $em, string $entity_name)
+    public function __construct(EntityManagerInterface $em, string $entity)
     {
         $this->em = $em;
-        $this->entity = $entity_name;
+        $this->entity = $entity;
     }
 
     public function getRepository(): ObjectRepository

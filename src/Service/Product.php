@@ -2,12 +2,9 @@
 
 namespace Mtt\CatalogBundle\Service;
 
-use CatalogBundle\Entity\MttCatalogProduct;
-use CatalogBundle\Entity\MttCatalogProductDescription;
-use CatalogBundle\Exceptions;
-use CatalogBundle\Interfaces\ProductServiceInterface;
-use ShopCoreBundle\Interfaces\Catalog;
-use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
+use Mtt\CatalogBundle\Interfaces\ProductServiceInterface;
+use Mtt\Core\Interfaces\Catalog\Entity;
+use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 
 class Product extends AbstractService implements ProductServiceInterface
 {
@@ -22,7 +19,7 @@ class Product extends AbstractService implements ProductServiceInterface
     /**
      * @inheritdoc
      */
-    public function save(Catalog\ProductInterface $product)
+    public function save(Entity\ProductInterface $product)
     {
         $this->saveEntity($product);
     }
@@ -30,7 +27,7 @@ class Product extends AbstractService implements ProductServiceInterface
     /**
      * @inheritdoc
      */
-    public function update(Catalog\ProductInterface $product)
+    public function update(Entity\ProductInterface $product)
     {
         $this->updateEntity($product);
     }
@@ -39,7 +36,7 @@ class Product extends AbstractService implements ProductServiceInterface
     /**
      * @inheritdoc
      */
-    public function delete(Catalog\ProductInterface $product)
+    public function delete(Entity\ProductInterface $product)
     {
         $this->deleteEntity($product);
     }
@@ -47,7 +44,7 @@ class Product extends AbstractService implements ProductServiceInterface
     /**
      * @inheritdoc
      */
-    public function find(int $product_id): Catalog\ProductInterface
+    public function find(int $product_id): Entity\ProductInterface
     {
         return $this->findEntity($product_id);
     }

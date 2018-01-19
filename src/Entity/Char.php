@@ -4,7 +4,7 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Mtt\Core\Interfaces\Catalog\CharInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\CharInterface;
 use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 
 abstract class Char implements CharInterface, BasicEntityInterface
