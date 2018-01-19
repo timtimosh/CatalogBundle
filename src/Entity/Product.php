@@ -6,6 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity;
 
+/**
+ * @ORM\MappedSuperclass
+ */
 abstract class Product implements Entity\ProductInterface
 {
     const ONSITE = 0;

@@ -3,9 +3,12 @@
 namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\CatalogBundle\Interfaces\ProductDescriptionInterface;
 
-
-abstract class CategoryDescription
+/**
+ * @ORM\MappedSuperclass
+ */
+abstract class CategoryDescription implements ProductDescriptionInterface
 {
     /**
      * @var string
@@ -75,7 +78,7 @@ abstract class CategoryDescription
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Entity\Category")
+     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_category", referencedColumnName="id_category")
      * })

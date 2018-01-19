@@ -5,6 +5,9 @@ namespace Mtt\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\BasicEntityInterface;
 
+/**
+ * @ORM\MappedSuperclass
+ */
 abstract class ProductDescription implements BasicEntityInterface
 {
     /**

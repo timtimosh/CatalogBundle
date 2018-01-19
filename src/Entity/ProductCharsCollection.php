@@ -2,13 +2,15 @@
 
 namespace Mtt\CatalogBundle\Entity;
 
-use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
 use Mtt\Core\Interfaces\Catalog\Entity\ProductCharInterface;
 use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 
-abstract class ProductCharsCollection implements ProductCharInterface, BasicEntityInterface
+/**
+ * @ORM\MappedSuperclass
+ */
+abstract class ProductCharsCollection implements ProductCharInterface
 {
     /**
      * @var string
@@ -33,7 +35,7 @@ abstract class ProductCharsCollection implements ProductCharInterface, BasicEnti
     /**
      * @var \Mtt\CatalogBundle\Entity\CharValue
      *
-     * @ORM\ManyToOne(targetEntity="CharValues")
+     * @ORM\ManyToOne(targetEntity="CharValue")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val", nullable=false)
      * })

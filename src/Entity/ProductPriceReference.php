@@ -4,6 +4,9 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\MappedSuperclass
+ */
 abstract class ProductPriceReference
 {
     /**
@@ -28,7 +31,7 @@ abstract class ProductPriceReference
     /**
      * @var \Mtt\CatalogBundle\Entity\CharValue
      *
-     * @ORM\ManyToOne(targetEntity="CharValues")
+     * @ORM\ManyToOne(targetEntity="CharValue")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val")
      * })

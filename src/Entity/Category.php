@@ -4,8 +4,20 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\MappedSuperclass
+ */
 abstract class Category
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_category", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $idCategory;
+
     /**
      * @var string
      *
@@ -33,16 +45,6 @@ abstract class Category
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     protected $active = '1';
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_category", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    protected $idCategory;
-
 
 }
 

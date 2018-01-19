@@ -5,9 +5,11 @@ namespace Mtt\CatalogBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\CharInterface;
-use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
 
-abstract class Char implements CharInterface, BasicEntityInterface
+/**
+ * @ORM\MappedSuperclass
+ */
+abstract class Char implements CharInterface
 {
     const OPTION_VIEW_TYPE_SELECT = 0;
     const OPTION_VIEW_TYPE_RADIO = 1;
