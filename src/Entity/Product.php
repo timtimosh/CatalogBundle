@@ -5,10 +5,8 @@ namespace Mtt\CatalogBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity;
-use Mtt\CatalogBundle\Interfaces\BasicEntityInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
-abstract class Product implements Entity\ProductInterface, BasicEntityInterface
+abstract class Product implements Entity\ProductInterface
 {
     const ONSITE = 0;
     const NOT_ONSITE = 1;
@@ -240,19 +238,20 @@ abstract class Product implements Entity\ProductInterface, BasicEntityInterface
     }
 
 
+
+    protected function getDescriptionEntity()
+    {
+        return $this->description_entity;
+    }
     /**
      * Do not use this method dorectly it`s only purpose to solve the service
      * @return ProductDescription
      */
-    public function getDescriptionEntity():ProductDescription
+    public function setDescriptionEntity($descriptionEntity)
     {
-        if(null === $this->description_entity){
-            $this->description_entity = new ProductDescription();
-            $this->description_entity->setProduct($this);
-        }
-        return $this->description_entity;
+        if(null!==$this->description_entity) { throw new \LogicException("Это значение стоит устанавливать только при создании новой сущности!");}
+        $this->description_entity = $descriptionEntity;
     }
-
 
     public function getName()
     {

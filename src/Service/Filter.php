@@ -2,13 +2,13 @@
 
 namespace Mtt\CatalogBundle\Service;
 
-use Mtt\CatalogBundle\Interfaces\ProductInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 
 class Filter implements \Mtt\Core\Interfaces\Catalog\Service\FilterInterface
 {
     protected $filteredProductsCollection = [];
 
-    protected function __construct(ProductInterface $productService)
+    public function __construct(ProductInterface $productService)
     {
         $this->filteredProductsCollection = new \SplObjectStorage();
     }

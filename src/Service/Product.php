@@ -2,9 +2,11 @@
 
 namespace Mtt\CatalogBundle\Service;
 
+use LittleHouse\CatalogBundle\Entity\ProductDescription;
 use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 use Mtt\Core\Interfaces\Catalog\Entity;
 use Mtt\Core\Interfaces\Catalog\Service\ProductInterface as ProductService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Product extends AbstractService implements ProductService
 {
@@ -13,9 +15,17 @@ class Product extends AbstractService implements ProductService
      */
     public function create(): ProductInterface
     {
-        return $this->createEntity();
+        /**
+         * @var $entity \Mtt\CatalogBundle\Entity\Product
+         */
+        $entity = parent::createEntity();
+        $descriptionEntity = $this->getDescriptionEntity();
+        $entity->setDescriptionEntity($descriptionEntity);
     }
 
+    protected function getDescriptionEntity(){
+        return new ProductDescription();
+    }
     /**
      * @inheritdoc
      */
@@ -49,5 +59,8 @@ class Product extends AbstractService implements ProductService
         return $this->findEntity($product_id);
     }
 
-
+    protected function getCurrentServiceEntityName():string
+    {
+        return 'mtt.catalog.entity.product';
+    }
 }

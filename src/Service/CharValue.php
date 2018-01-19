@@ -3,6 +3,7 @@
 namespace Mtt\CatalogBundle\Service;
 
 use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CharValue extends AbstractService
 {
@@ -37,6 +38,11 @@ class CharValue extends AbstractService
     public function delete(CharValueInterface $charValue)
     {
         $this->deleteEntity($charValue);
+    }
+
+    protected function getCurrentServiceEntityName():string
+    {
+        return 'mtt.catalog.entity.char_value';
     }
 
     /**

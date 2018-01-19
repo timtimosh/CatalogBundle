@@ -3,8 +3,9 @@
 namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\Core\Interfaces\Catalog\Entity\BasicEntityInterface;
 
-abstract class ProductDescription
+abstract class ProductDescription implements BasicEntityInterface
 {
     /**
      * @var string

@@ -36,14 +36,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('ProductImage')->isRequired()->cannotBeEmpty()->end()
                         ->end()
                     ->end()
-                ->arrayNode('services')
-                    ->children()
-                        ->scalarNode('Product')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('Char')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('CharValue')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('ProductChar')->isRequired()->cannotBeEmpty()->end()
-                    ->end()
-                ->end()
             ->end();
 
         return $treeBuilder;

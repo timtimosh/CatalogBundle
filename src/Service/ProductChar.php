@@ -2,7 +2,8 @@
 
 namespace Mtt\CatalogBundle\Service;
 
-use ShopCoreBundle\Interfaces\Catalog\ProductCharInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\ProductCharInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProductChar extends AbstractService
 {
@@ -41,5 +42,10 @@ class ProductChar extends AbstractService
      */
     public function find(int $char_id):ProductCharInterface{
         return $this->findEntity($char_id);
+    }
+
+    protected function getCurrentServiceEntityName():string
+    {
+        return 'mtt.catalog.entity.product_chars_collection';
     }
 }
