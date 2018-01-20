@@ -76,15 +76,20 @@ abstract class CategoryDescription implements ProductDescriptionInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Category
      *
+     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface", inversedBy="description_entity", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="category", referencedColumnName="category_id")
+     */
+    protected $category;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_category", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_category", referencedColumnName="id_category")
-     * })
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $idCategory;
-
 
 }
 

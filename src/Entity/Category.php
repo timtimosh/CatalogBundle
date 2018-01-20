@@ -46,5 +46,10 @@ abstract class Category
      */
     protected $active = '1';
 
+    /**
+     * @ORM\OneToOne(targetEntity="\Mtt\CatalogBundle\Interfaces\CategoryDescriptionInterface", mappedBy="category", cascade={"persist", "remove"})
+     */
+    protected $description_entity;
+
 }
 
