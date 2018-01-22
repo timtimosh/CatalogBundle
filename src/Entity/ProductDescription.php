@@ -93,7 +93,7 @@ abstract class ProductDescription implements BasicEntityInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\ProductImage
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductImageInterface")
+     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ImageInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="main_image", referencedColumnName="id_img", nullable=true)
      * })

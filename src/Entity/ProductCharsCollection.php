@@ -46,7 +46,7 @@ abstract class ProductCharsCollection implements ProductCharInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface", inversedBy="chars_value_collection")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface", inversedBy="charsCollection")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product", nullable=false)
      * })

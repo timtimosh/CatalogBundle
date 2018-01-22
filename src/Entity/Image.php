@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class Image
+abstract class Image implements \Mtt\Core\Interfaces\Catalog\Entity\ImageInterface
 {
     /**
      * @var string

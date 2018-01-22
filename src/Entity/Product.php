@@ -24,14 +24,14 @@ abstract class Product implements Entity\ProductInterface
      *
      * @ORM\Column(name="id_erp", type="string", length=50, nullable=true)
      */
-    protected $idErp;
+    protected $idErp = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="sku", type="string", length=50, nullable=true)
      */
-    protected $sku;
+    protected $sku = '';
 
     /**
      * @var boolean
@@ -99,11 +99,11 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @ORM\OneToMany(targetEntity="Mtt\CatalogBundle\Interfaces\ProductCharsCollectionInterface", mappedBy="product", cascade={"remove"})
      */
-    protected $chars_value_collection;
+    protected $charsCollection;
 
     public function __construct()
     {
-        $this->chars_value_collection = new ArrayCollection();
+        $this->charsCollection = new ArrayCollection();
     }
 
     /**
@@ -111,7 +111,7 @@ abstract class Product implements Entity\ProductInterface
      */
     public function getCharsCollection()
     {
-        return $this->chars_value_collection;
+        return $this->charsCollection;
     }
 
 
@@ -242,7 +242,7 @@ abstract class Product implements Entity\ProductInterface
 
 
 
-    protected function getDescriptionEntity()
+    public function getDescriptionEntity()
     {
         return $this->description_entity;
     }
@@ -281,6 +281,30 @@ abstract class Product implements Entity\ProductInterface
      * @return int
      */
     public function getProductId(): int
+    {
+        return $this->idProduct;
+    }
+
+    /**
+     * @return datetime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return datetime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdProduct()
     {
         return $this->idProduct;
     }

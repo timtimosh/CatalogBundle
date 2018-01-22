@@ -45,7 +45,7 @@ abstract class ProductCharSetup
     /**
      * @var \Mtt\CatalogBundle\Entity\Char
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Char")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_char", referencedColumnName="id_char")
      * })

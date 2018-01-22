@@ -24,7 +24,7 @@ abstract class ProductCharToImage implements ProductCharToImageInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductCharsCollectionInterface")
+     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Interfaces\ProductCharsCollectionInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_char", referencedColumnName="id")
      * })
