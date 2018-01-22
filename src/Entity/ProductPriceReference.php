@@ -21,7 +21,7 @@ abstract class ProductPriceReference
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      * })
@@ -31,7 +31,7 @@ abstract class ProductPriceReference
     /**
      * @var \Mtt\CatalogBundle\Entity\CharValue
      *
-     * @ORM\ManyToOne(targetEntity="CharValue")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val")
      * })
@@ -41,7 +41,7 @@ abstract class ProductPriceReference
     /**
      * @var \Mtt\CatalogBundle\Entity\ProductPrice
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductPrice")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductPriceInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="price", referencedColumnName="id_price")
      * })

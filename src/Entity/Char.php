@@ -99,7 +99,7 @@ abstract class Char implements CharInterface
     protected $url_key;
 
     /**
-     * @ORM\OneToMany(targetEntity="CharValue", mappedBy="value_collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface", mappedBy="value_collection", cascade={"persist", "remove"})
      */
     protected $value_collection;
 

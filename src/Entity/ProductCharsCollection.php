@@ -35,27 +35,18 @@ abstract class ProductCharsCollection implements ProductCharInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\CharValue
      *
-     * @ORM\ManyToOne(targetEntity="CharValue")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val", nullable=false)
      * })
      */
     protected $charValue;
 
-    /**
-     * @var \Mtt\CatalogBundle\Entity\ProductImage
-     *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductImage")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="img", referencedColumnName="id_img")
-     * })
-     */
-    protected $img;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product", inversedBy="chars_value_collection")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface", inversedBy="chars_value_collection")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product", nullable=false)
      * })
@@ -102,21 +93,6 @@ abstract class ProductCharsCollection implements ProductCharInterface
         $this->charValue = $charValue;
     }
 
-    /**
-     * @return ProductImage
-     */
-    public function getImg(): ProductImage
-    {
-        return $this->img;
-    }
-
-    /**
-     * @param ProductImage $img
-     */
-    public function setImg(ProductImage $img)
-    {
-        $this->img = $img;
-    }
 
     /**
      * @return ProductInterface

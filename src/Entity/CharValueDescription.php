@@ -98,7 +98,7 @@ abstract class CharValueDescription
     /**
      * @var \Mtt\CatalogBundle\Entity\CharValue
      *
-     * @ORM\ManyToOne(targetEntity="CharValue")
+     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="char_val", referencedColumnName="id_char_val")
      * })

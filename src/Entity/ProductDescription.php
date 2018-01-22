@@ -76,7 +76,7 @@ abstract class ProductDescription implements BasicEntityInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Entity\Product", inversedBy="description_entity", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface", inversedBy="description_entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      */
     protected $product;
@@ -93,7 +93,7 @@ abstract class ProductDescription implements BasicEntityInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\ProductImage
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductImage")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductImageInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="main_image", referencedColumnName="id_img", nullable=true)
      * })

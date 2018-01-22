@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class Category
+abstract class Category implements \Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface
 {
     /**
      * @var integer
@@ -47,7 +47,7 @@ abstract class Category
     protected $active = '1';
 
     /**
-     * @ORM\OneToOne(targetEntity="\Mtt\CatalogBundle\Interfaces\CategoryDescriptionInterface", mappedBy="category", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Interfaces\CategoryDescriptionInterface", mappedBy="category", cascade={"persist", "remove"})
      */
     protected $description_entity;
 

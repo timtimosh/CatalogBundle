@@ -35,12 +35,12 @@ abstract class ProductCharSetup
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_product", referencedColumnName="id_product")
+     *   @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      * })
      */
-    protected $idProduct;
+    protected $product;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\Char

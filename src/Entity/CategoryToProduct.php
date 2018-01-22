@@ -21,22 +21,22 @@ abstract class CategoryToProduct
     /**
      * @var \Mtt\CatalogBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Category")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_category", referencedColumnName="id_category")
+     *   @ORM\JoinColumn(name="category", referencedColumnName="id_category")
      * })
      */
-    protected $idCategory;
+    protected $category;
 
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
      * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_product", referencedColumnName="id_product")
+     *   @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      * })
      */
-    protected $idProduct;
+    protected $product;
 
 
 }

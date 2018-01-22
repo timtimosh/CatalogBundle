@@ -36,7 +36,7 @@ abstract class CharValue implements CharValueInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Char
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Char")
+     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id_char")
      * })

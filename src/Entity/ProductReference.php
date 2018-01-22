@@ -21,7 +21,7 @@ abstract class ProductReference
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_descendant", referencedColumnName="id_product")
      * })
@@ -31,7 +31,7 @@ abstract class ProductReference
     /**
      * @var \Mtt\CatalogBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\CatalogBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_ancestor", referencedColumnName="id_product")
      * })

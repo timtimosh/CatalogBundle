@@ -92,12 +92,12 @@ abstract class Product implements Entity\ProductInterface
     protected $idProduct;
 
     /**
-     * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Entity\ProductDescription", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Mtt\CatalogBundle\Interfaces\ProductDescriptionInterface", mappedBy="product", cascade={"persist", "remove"})
      */
     protected $description_entity;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProductCharsCollection", mappedBy="product", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Mtt\CatalogBundle\Interfaces\ProductCharsCollectionInterface", mappedBy="product", cascade={"remove"})
      */
     protected $chars_value_collection;
 
