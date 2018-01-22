@@ -2,12 +2,15 @@
 
 namespace Mtt\CatalogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\CatalogBundle\Interfaces\ProductToImageInterface;
+use Mtt\Core\Interfaces\Catalog\Entity;
 
 /**
  * @ORM\MappedSuperclass
  */
-abstract class CategoryToProduct
+abstract class ProductToImage implements ProductToImageInterface
 {
     /**
      * @var integer
@@ -21,23 +24,11 @@ abstract class CategoryToProduct
     /**
      * @var \Mtt\CatalogBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="category", referencedColumnName="id_category")
-     * })
-     */
-    protected $category;
-
-    /**
-     * @var \Mtt\CatalogBundle\Entity\Product
-     *
      * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product", referencedColumnName="id_product")
      * })
      */
     protected $product;
-
-
 }
 

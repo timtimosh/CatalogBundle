@@ -85,11 +85,11 @@ abstract class CategoryDescription implements ProductDescriptionInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_category", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $idCategory;
+    protected $id;
 
 }
 

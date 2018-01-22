@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class ProductImage
+abstract class Image
 {
     /**
      * @var string
@@ -66,27 +66,6 @@ abstract class ProductImage
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $idImg;
-
-    /**
-     * @var \Mtt\CatalogBundle\Entity\Product
-     *
-     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="product", referencedColumnName="id_product")
-     * })
-     */
-    protected $product;
-
-    /**
-     * @var \Mtt\CatalogBundle\Entity\ProductCharsCollection
-     *
-     * @ORM\ManyToOne(targetEntity="ProductCharsCollection")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_specification", referencedColumnName="id")
-     * })
-     */
-    protected $idSpecification;
-
 
 }
 
