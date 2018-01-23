@@ -23,7 +23,7 @@ abstract class AbstractTest extends WebTestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        require(__DIR__ . '/Mocks.php');
+        require(__DIR__ . '/Fixtures.php');
         $this->mocks = $mock;
 
     }
@@ -39,14 +39,15 @@ abstract class AbstractTest extends WebTestCase
         static::truncateTablesInDb();
     }
 
-    protected static function truncateTablesInDb(){
+    protected static function truncateTablesInDb()
+    {
         $em = static::$container->get('doctrine.orm.default_entity_manager');
         $connection = $em->getConnection();
         $schemaManager = $connection->getSchemaManager();
         $tables = $schemaManager->listTables();
         $query = '';
         $connection->query('SET FOREIGN_KEY_CHECKS=0');
-        foreach($tables as $table) {
+        foreach ($tables as $table) {
             $name = $table->getName();
             $query .= 'TRUNCATE ' . $name . ';';
         }
