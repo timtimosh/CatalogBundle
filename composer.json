@@ -13,7 +13,7 @@
    },
   "autoload": {
     "psr-4": {
-      "Mtt\\CatalogBundle\\": "src/"
+      "Mtt\\CatalogBundle\\": ["src/", "tests/"]
     }
   }
 }
