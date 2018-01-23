@@ -4,9 +4,9 @@ namespace Mtt\CatalogBundle\Tests\Functional\Services;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
-use CatalogBundle\Service\AbstractService;
-use CatalogBundle\Tests\Functional\AbstractTest;
+use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
+use Mtt\CatalogBundle\Service\AbstractService;
+use Mtt\CatalogBundle\Tests\Functional\AbstractTest;
 
 class ProductServiceTest extends AbstractTest
 {

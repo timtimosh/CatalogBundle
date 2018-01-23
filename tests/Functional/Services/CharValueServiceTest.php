@@ -4,8 +4,8 @@ namespace Mtt\CatalogBundle\Tests\Functional\Entities;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use CatalogBundle\Tests\Functional\AbstractTest;
-use CatalogBundle\Tests\Functional\Services\CharServiceTest;
+use Mtt\CatalogBundle\Tests\Functional\AbstractTest;
+use Mtt\CatalogBundle\Tests\Functional\Services\CharServiceTest;
 
 class CharValueServiceTest extends AbstractTest
 {

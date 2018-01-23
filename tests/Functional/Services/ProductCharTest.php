@@ -4,9 +4,9 @@ namespace Mtt\CatalogBundle\Tests\Functional\Entities;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use CatalogBundle\Tests\Functional\AbstractTest;
-use ShopCoreBundle\Interfaces\Catalog\CharValueInterface;
-use ShopCoreBundle\Interfaces\Catalog\ProductInterface;
+use Mtt\CatalogBundle\Tests\Functional\AbstractTest;
+use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 
 class ProductCharTest extends AbstractTest
 {
