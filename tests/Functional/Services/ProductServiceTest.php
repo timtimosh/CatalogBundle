@@ -14,7 +14,7 @@ class ProductServiceTest extends AbstractTest
 
     public function testProductCreation()
     {
-        $product_service = $this::$container->get('catalog_product');
+        $product_service = $this::$container->get('test_alias.catalog.product.service');
         $product = $product_service->create();
 
         $this->assertTrue($product instanceof ProductInterface);
@@ -22,7 +22,7 @@ class ProductServiceTest extends AbstractTest
 
     public function testProductSave()
     {
-        $product_service = $this::$container->get('catalog_product');
+        $product_service = $this::$container->get('test_alias.catalog.product.service');
 
         foreach ($this->getMock() as $productFromMock) {
             $product = $product_service->create();
@@ -36,7 +36,7 @@ class ProductServiceTest extends AbstractTest
 
     public function testFindProduct()
     {
-        $product_service = $this::$container->get('catalog_product');
+        $product_service = $this::$container->get('test_alias.catalog.product.service');
         foreach ($this->getMock() as $productFromMock) {
             $product = $product_service->getRepository()->findOneBySku($productFromMock['sku']);
             $this->assertTrue($product instanceof ProductInterface);
@@ -50,7 +50,7 @@ class ProductServiceTest extends AbstractTest
 
     public function testProductUpdate()
     {
-        $product_service = $this::$container->get('catalog_product');
+        $product_service = $this::$container->get('test_alias.catalog.product.service');
         $mockProduct = $this->getMock()->first();
         $product = $product_service->getRepository()->findOneBySku($mockProduct['sku']);
         //dump($product);
@@ -72,7 +72,7 @@ class ProductServiceTest extends AbstractTest
 
     public function testProductDelete()
     {
-        $product_service = $this::$container->get('catalog_product');
+        $product_service = $this::$container->get('test_alias.catalog.product.service');
         foreach ($this->getMock() as $productFromMock) {
             $product = $product_service->getRepository()->findOneBySku($productFromMock['sku']);
             $this->assertNull(

@@ -1,11 +1,11 @@
 <?php
 
-namespace Mtt\CatalogBundle\Tests\Functional\Services;
+namespace Mtt\CatalogBundle\Functional\Services;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use ShopCoreBundle\Interfaces\Catalog\CharInterface;
-use Mtt\CatalogBundle\Tests\Functional\AbstractTest;
+use Mtt\Core\Interfaces\Catalog\Entity\CharInterface;
+use Mtt\CatalogBundle\Functional\AbstractTest;
 
 class CharServiceTest extends AbstractTest
 {
@@ -13,7 +13,7 @@ class CharServiceTest extends AbstractTest
 
     public function testCharCreation()
     {
-        $charService = $this::$container->get('catalog_char');
+        $charService = $this::$container->get('catalog.char.service');
         $char = $charService->create();
 
         $this->assertTrue($char instanceof CharInterface);
@@ -21,7 +21,7 @@ class CharServiceTest extends AbstractTest
 
     public function testCharSave()
     {
-        $char_service = $this::$container->get('catalog_char');
+        $char_service = $this::$container->get('catalog.char.service');
 
         foreach ($this->getMock() as $mock) {
             $char = $char_service->create();
@@ -37,7 +37,7 @@ class CharServiceTest extends AbstractTest
 
     public function testCharFind()
     {
-        $char_service = $this::$container->get('catalog_char');
+        $char_service = $this::$container->get('catalog.char.service');
         $mock = $this->getMock()->first();
         $char = $char_service->getRepository()->findOneByIdErp($mock['id_erp']);
         $this->assertTrue($char instanceof CharInterface);
@@ -45,7 +45,7 @@ class CharServiceTest extends AbstractTest
 
     public function testCharDelete()
     {
-        $charService = $this::$container->get('catalog_char');
+        $charService = $this::$container->get('catalog.char.service');
         $allChars = $charService->getRepository()->findAll();
         $this->assertGreaterThan(
             0, count($allChars)

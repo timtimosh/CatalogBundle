@@ -14,10 +14,10 @@ class CharValueServiceTest extends AbstractTest
     public function testSave()
     {
         $char = $this->createChar();
-        // $char_service = $this::$container->get('catalog_char');
+        // $char_service = $this::$container->get('catalog.char.service');
         $mock = $this->getMock()->first();
         $mock = $mock['values']->first();
-        $char_value_service = $this::$container->get('catalog_char_value');
+        $char_value_service = $this::$container->get('catalog.charvalue.service');
 
         $new_char_value = $char_value_service->create();
         $new_char_value->setValue($mock['value']);
@@ -30,7 +30,7 @@ class CharValueServiceTest extends AbstractTest
 
     protected function createChar()
     {
-        $char_service = $this::$container->get('catalog_char');
+        $char_service = $this::$container->get('catalog.char.service');
         $mock = $this->getMock()->first();
         $char = $char_service->create();
         $char->setIdErp($mock['id_erp']);
@@ -43,7 +43,7 @@ class CharValueServiceTest extends AbstractTest
 
     public function deleteTest()
     {
-        $charServiceValue = $this::$container->get('catalog_char_value');
+        $charServiceValue = $this::$container->get('catalog.charvalue.service');
         $allCharsValues = $charServiceValue->getRepository()->findAll();
         $this->assertGreaterThan(
             0, count($allCharsValues)

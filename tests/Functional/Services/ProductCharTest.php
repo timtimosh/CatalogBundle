@@ -17,10 +17,10 @@ class ProductCharTest extends AbstractTest
     public function testAttachChar()
     {
         $this->createCharValues();
-        $charValueService = $this::$container->get('catalog_char_value');
+        $charValueService = $this::$container->get('catalog.charvalue.service');
         $allAviableChars = $charValueService->getRepository()->findAll();
         $product = $this->getProduct();
-        $productCharService = $this::$container->get('catalog_product_char');
+        $productCharService = $this::$container->get('catalog.productchar.service');
         $this->assertGreaterThan(
             0, count($allAviableChars)
         );
@@ -37,7 +37,7 @@ class ProductCharTest extends AbstractTest
     public function testProductHasAttachedChars()
     {
         $product = $this->getProduct();
-        $product_service = $this::$container->get('catalog_product');
+        $product_service = $this::$container->get('catalog.product.service');
         $product = $product_service->find($product->getProductId());
         $this->assertGreaterThan(
             0,
@@ -48,8 +48,8 @@ class ProductCharTest extends AbstractTest
     public function testDeleteAttachedChar()
     {
         $product = $this->getProduct();
-        $product_service = $this::$container->get('catalog_product');
-        $productCharService = $this::$container->get('catalog_product_char');
+        $product_service = $this::$container->get('catalog.product.service');
+        $productCharService = $this::$container->get('catalog.productchar.service');
         $product = $product_service->find($product->getProductId());
         foreach ($product->getCharsCollection() as $charCollectionEntity) {
             $this->assertNull(
@@ -72,7 +72,7 @@ class ProductCharTest extends AbstractTest
 
     protected function createProduct()
     {
-        $product_service = $this::$container->get('catalog_product');
+        $product_service = $this::$container->get('catalog.product.service');
         $productFromMock = $this->getMock('productsMocks')->first();
         $product = $product_service->create();
         $product->setSku($productFromMock['sku']);
@@ -84,7 +84,7 @@ class ProductCharTest extends AbstractTest
 
     protected function createCharValues()
     {
-        $char_service = $this::$container->get('catalog_char');
+        $char_service = $this::$container->get('catalog.char.service');
         $mock = $this->getMock('charValueTestMocks')->first();
         $char = $char_service->create();
         $char->setIdErp($mock['id_erp']);
@@ -93,7 +93,7 @@ class ProductCharTest extends AbstractTest
         $char->setName($mock['name']);
         $char_service->save($char);
 
-        $char_value_service = $this::$container->get('catalog_char_value');
+        $char_value_service = $this::$container->get('catalog.charvalue.service');
         $mock = $this->getMock('charValueTestMocks')->first();
         foreach ($mock['values'] as $charValueMock) {
             $new_char_value = $char_value_service->create();
