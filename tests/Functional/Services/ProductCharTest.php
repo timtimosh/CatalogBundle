@@ -4,7 +4,7 @@ namespace Mtt\CatalogBundle\Tests\Functional\Entities;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Mtt\CatalogBundle\Tests\Functional\AbstractTest;
+use Mtt\CatalogBundle\Tests\Functional\Services\AbstractTest;
 use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
 use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 

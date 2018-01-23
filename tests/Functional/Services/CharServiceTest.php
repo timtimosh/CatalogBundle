@@ -5,7 +5,7 @@ namespace Mtt\CatalogBundle\Functional\Services;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Mtt\Core\Interfaces\Catalog\Entity\CharInterface;
-use Mtt\CatalogBundle\Functional\AbstractTest;
+use Mtt\CatalogBundle\Tests\Functional\Services\AbstractTest;
 
 class CharServiceTest extends AbstractTest
 {
