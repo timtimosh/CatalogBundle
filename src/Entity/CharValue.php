@@ -4,6 +4,7 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\MappedSuperclass
@@ -27,21 +28,92 @@ abstract class CharValue implements CharValueInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_char_val", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $idCharVal;
+    protected $id;
 
     /**
-     * @var \Mtt\CatalogBundle\Entity\Char
+     * @var \Mtt\CatalogBundle\Entity\Characteristic
      *
-     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharInterface")
+     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharInterface", inversedBy="valuesCollection", fetch="EXTRA_LAZY")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id_char")
+     *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id")
      * })
      */
     protected $characteristic;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name_alt", type="string", length=50, nullable=true)
+     */
+    protected $nameAlt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=64, nullable=true)
+     */
+    protected $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short_description", type="text", length=255, nullable=true)
+     */
+    protected $shortDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
+     */
+    protected $seoTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seo_h1", type="string", length=255, nullable=true)
+     */
+    protected $seoH1;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
+     */
+    protected $metaDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_keyword", type="string", length=255, nullable=true)
+     */
+    protected $metaKeyword;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tag", type="string", length=255, nullable=true)
+     */
+    protected $tag;
+
 
     /**
      * @return string
@@ -78,30 +150,34 @@ abstract class CharValue implements CharValueInterface
     /**
      * @return int
      */
-    public function getIdCharVal(): int
+    public function getId(): int
     {
-        return $this->idCharVal;
+        return $this->id;
     }
 
     /**
-     * @return Char
+     * @return Characteristic
      */
-    protected function getChar(): Char
+    public function getCharacteristic(): Characteristic
     {
         return $this->characteristic;
     }
 
     /**
-     * @param Char $char
+     * @param Characteristic $char
      */
-    public function setChar(Char $char)
+    public function setCharacteristic(Characteristic $char)
     {
         $this->characteristic = $char;
     }
 
     public function getName(): string
     {
-        return $this->getChar()->getName();
+        return $this->getCharacteristic()->getName();
+    }
+
+    public function __toString(){
+        return $this->getName().': '.$this->getValue();
     }
 }
 

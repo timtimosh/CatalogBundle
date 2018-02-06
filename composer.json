@@ -8,9 +8,14 @@
     }
   ],
   "require": {
-	"php": ">=7.0",
+	"php": ">=7.1",
 	"symfony/symfony": "~3.4.0"
    },
+  "require-dev": {
+    "doctrine/doctrine-fixtures-bundle": "^3.0",
+    "hautelook/alice-bundle": "~v2.0",
+    "phpunit/phpunit": "^6"
+  },
   "autoload": {
     "psr-4": {
       "Mtt\\CatalogBundle\\": "src/"

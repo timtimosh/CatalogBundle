@@ -1,0 +1,13 @@
+catalog:
+    path:  /catalog
+    defaults: { _controller: "MttCatalogBundle:Product:index" }
+
+catalog_show:
+    path:  /catalog/{id}
+    defaults: { _controller: "MttCatalogBundle:Product:show" }
+
+catalog_bulk_action:
+    path:  /catalog/bulk-action
+    defaults: { _controller: "MttCatalogBundle:Product:bulk" }
+    requirements: { _method: post }
+    

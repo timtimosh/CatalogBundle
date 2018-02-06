@@ -21,22 +21,14 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('mtt_catalog');
 
         $rootNode
-                ->children()
-                    ->arrayNode('entities')
-                        ->children()
-                            ->scalarNode('Category')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('CategoryDescription')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('CategoryToProduct')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('Char')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('CharValue')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('CharValueDescription')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('Product')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('ProductDescription')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('ProductCharsCollection')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('ProductImage')->isRequired()->cannotBeEmpty()->end()
-                        ->end()
-                    ->end()
+            ->children()
+                ->scalarNode('product_entity')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('category_entity')->defaultNull()->cannotBeEmpty()->end()
+                ->scalarNode('characteristic_entity')->defaultNull()->cannotBeEmpty()->end()
+                ->scalarNode('characteristic_value_entity')->defaultNull()
+            ->end()
             ->end();
+
 
         return $treeBuilder;
     }

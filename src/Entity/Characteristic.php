@@ -9,7 +9,7 @@ use Mtt\Core\Interfaces\Catalog\Entity\CharInterface;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class Char implements CharInterface
+abstract class Characteristic implements CharInterface
 {
     const OPTION_VIEW_TYPE_SELECT = 0;
     const OPTION_VIEW_TYPE_RADIO = 1;
@@ -78,11 +78,11 @@ abstract class Char implements CharInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="id_char", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $idChar;
+    protected $id;
 
     /**
      * @var integer
@@ -99,19 +99,29 @@ abstract class Char implements CharInterface
     protected $url_key;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface", mappedBy="value_collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface", mappedBy="characteristic", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
-    protected $value_collection;
+    protected $valuesCollection;
 
     public function __construct()
     {
-        $this->value_collection = new ArrayCollection();
+        $this->valuesCollection = new ArrayCollection();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getValuesCollection()
+    {
+        return $this->valueCollection;
+    }
+
+
 
     /**
      * @return int
      */
-    public function getIdChar(): int
+    public function getId(): int
     {
         return $this->idChar;
     }
@@ -273,13 +283,6 @@ abstract class Char implements CharInterface
         $this->url_key = $url_key;
     }
 
-    /**
-     * @return ArrayCollection;
-     */
-    public function getCharValues():array
-    {
-        return $this->value_collection;
-    }
 
 /*    public function removeCharValue($value)
     {
@@ -290,6 +293,10 @@ abstract class Char implements CharInterface
     {
         $this->getCharValues()->add($value);
     }*/
+
+    public function __toString(){
+        return $this->getName();
+    }
 
 }
 
