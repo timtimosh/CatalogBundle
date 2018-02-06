@@ -14,6 +14,9 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class MttCatalogExtension extends Extension
 {
+    public function load(array $configs, ContainerBuilder $container){
+
+    }
     /**
      * {@inheritdoc}
      */
