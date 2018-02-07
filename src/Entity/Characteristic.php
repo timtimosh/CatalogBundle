@@ -4,12 +4,12 @@ namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Mtt\Core\Interfaces\Catalog\Entity\CharInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface;
 
 /**
  * @ORM\MappedSuperclass
  */
-abstract class Characteristic implements CharInterface
+abstract class Characteristic implements CharacteristicInterface
 {
     const OPTION_VIEW_TYPE_SELECT = 0;
     const OPTION_VIEW_TYPE_RADIO = 1;
@@ -99,7 +99,7 @@ abstract class Characteristic implements CharInterface
     protected $url_key;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface", mappedBy="characteristic", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", mappedBy="characteristic", cascade={"remove"}, fetch="EXTRA_LAZY")
      */
     protected $valuesCollection;
 

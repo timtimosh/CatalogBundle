@@ -2,15 +2,18 @@
 
 namespace Mtt\CatalogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface;
 
 /**
  * @ORM\MappedSuperclass
  */
-abstract class Category implements \Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface
+
+abstract class Category implements CategoryInterface
 {
-    const ALIAS = 'mtt.catalog.entity.category';
-    const PRODUCT_ACTIVE = 1;
+
+    const CATEGORY_ACTIVE = 1;
     /**
      * @var integer
      *
@@ -35,11 +38,11 @@ abstract class Category implements \Mtt\Core\Interfaces\Catalog\Entity\CategoryI
     protected $name;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="parent", type="integer", nullable=true)
+     * One Page has One parent Page.
+     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    protected $parent = 0;
+    protected $parent;
 
     /**
      * @var boolean
@@ -99,17 +102,62 @@ abstract class Category implements \Mtt\Core\Interfaces\Catalog\Entity\CategoryI
     protected $metaKeyword;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tag", type="text", length=255, nullable=true)
-     */
-    protected $tag;
-
-    /**
      *
      * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface", fetch="EXTRA_LAZY", mappedBy="categories")
      */
     protected $products;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", length=255, nullable=false)
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", length=255, nullable=true)
+     */
+    protected $template;
+
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
 
     /**
      * @return string
@@ -154,7 +202,7 @@ abstract class Category implements \Mtt\Core\Interfaces\Catalog\Entity\CategoryI
     /**
      * @param int $parent
      */
-    public function setParent($parent)
+    public function setParent(CategoryInterface $parent)
     {
         $this->parent = $parent;
     }
@@ -288,22 +336,6 @@ abstract class Category implements \Mtt\Core\Interfaces\Catalog\Entity\CategoryI
     }
 
     /**
-     * @return string
-     */
-    public function getTag()
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @param string $tag
-     */
-    public function setTag($tag)
-    {
-        $this->tag = $tag;
-    }
-
-    /**
      * @return mixed
      */
     public function getProducts()
@@ -316,7 +348,10 @@ abstract class Category implements \Mtt\Core\Interfaces\Catalog\Entity\CategoryI
      */
     public function setProducts($products)
     {
-        $this->products = $products;
+        $this->products->clear();
+        foreach ($products as $product){
+            $this->products->add($product);
+        }
     }
 
     /**

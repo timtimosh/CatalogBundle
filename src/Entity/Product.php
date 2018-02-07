@@ -17,7 +17,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class Product implements Entity\ProductInterface
 {
-    const ALIAS = 'mtt.catalog.entity.product';
     const ONSITE = 0;
     const NOT_ONSITE = 1;
 
@@ -100,7 +99,7 @@ abstract class Product implements Entity\ProductInterface
 
     /**
      * Many Product have Many Characteristics value.
-     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="mtt_catalog_product_characteristic_values",
      *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="char_value", referencedColumnName="id")}
@@ -108,20 +107,11 @@ abstract class Product implements Entity\ProductInterface
      */
     protected $characteristicsValues;
 
-    /**
-     * Many Product have Many Characteristics value.
-     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharInterface", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="mtt_catalog_product_characteristic",
-     *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="characteristic", referencedColumnName="id")}
-     *      )
-     */
-    protected $characteristics;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     protected $name;
 
@@ -194,20 +184,17 @@ abstract class Product implements Entity\ProductInterface
 
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     *
-     * @Vich\UploadableField(mapping="mtt_catalog_product_image", fileNameProperty="image.name", size="image.size", mimeType="image.mimeType", originalName="image.originalName", dimensions="image.dimensions")
-     *
-     * @var File
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
      */
-    private $imageFile;
+    protected $mainImage;
 
     /**
-     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
-     *
-     * @var EmbeddedFile
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * @Vich\UploadableField(mapping="mtt_easypage_image", fileNameProperty="mainImage")
+     * @var File
      */
-    private $image;
+    protected $mainImageFile;
 
 
     /**
@@ -220,7 +207,7 @@ abstract class Product implements Entity\ProductInterface
 
     /**
      * One Page has One parent Page.
-     * @ORM\OneToOne(targetEntity="Mtt\EasyPageBundle\Entity\PageEntityInterface")
+     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
@@ -228,10 +215,9 @@ abstract class Product implements Entity\ProductInterface
 
     public function __construct()
     {
-        $this->characteristics = new ArrayCollection();
         $this->characteristicsValues = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->image = new EmbeddedFile();
+        $this->mainImage = new EmbeddedFile();
         $this->updatedAt = $this->createdAt = new \DateTime();
     }
 
@@ -268,7 +254,6 @@ abstract class Product implements Entity\ProductInterface
     }
 
 
-
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
@@ -278,10 +263,9 @@ abstract class Product implements Entity\ProductInterface
      *
      * @param File|UploadedFile $image
      */
-    public function setImageFile(?File $image = null)
+    public function setMainImageFile(?File $image = null)
     {
-        $this->imageFile = $image;
-
+        $this->mainImageFile = $image;
         if (null !== $image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
@@ -289,36 +273,21 @@ abstract class Product implements Entity\ProductInterface
         }
     }
 
-    public function getImageFile(): ?File
+    public function getMainImageFile()
     {
-        return $this->imageFile;
+        return $this->mainImageFile;
     }
 
-    public function setImage(EmbeddedFile $image)
+    public function setMainImage($image)
     {
-        $this->image = $image;
+        $this->mainImage= $image;
     }
 
-    public function getImage(): ?EmbeddedFile
+    public function getMainImage()
     {
-        return $this->image;
+        return $this->mainImage;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getImagesGallery()
-    {
-        return $this->imagesGallery;
-    }
-
-    /**
-     * @param mixed $images
-     */
-    public function setImagesGallery($gallery)
-    {
-        $this->imagesGallery = $gallery;
-    }
 
     /**
      * @return mixed
@@ -328,30 +297,24 @@ abstract class Product implements Entity\ProductInterface
         return $this->categories;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCharacteristics():Collection
+    public function setCategories($characteristicsValues)
     {
-        return $this->characteristics;
+        foreach ($characteristicsValues as $charValue){
+            $this->addCharacteristicsValues($charValue);
+        }
+
     }
 
-    /**
-     * @param array|ArrayCollection $characteristics
-     */
-    public function setCharacteristics($characteristics)
-    {
-        foreach ($characteristicsValues as $characteristic){
-            $this->addCharacteristics($characteristic);
+    public function addCategory(Entity\CategoryInterface $category){
+        $this->categories->add($category);
+    }
+
+    public function removeCategory(Entity\CategoryInterface $category){
+        if ($this->getCategories()->contains($category)) {
+            $this->getCategories()->removeElement($category);
         }
     }
 
-    public function addCharacteristics(Entity\CharInterface $characteristic)
-    {
-        if(!$this->characteristics->contains($characteristic)) {
-            $this->characteristics->add($characteristic);
-        }
-    }
     /**
      * @return mixed
      */
@@ -371,14 +334,13 @@ abstract class Product implements Entity\ProductInterface
 
     }
 
-    public function addCharacteristicsValues(Entity\CharValueInterface $charValue){
-        if(!$this->characteristicsValues->exists(
-            function($key, $element) use ($charValue){
-            return $charValue->getValue() === $element->getValue();
-            }
-            )) {
-            $this->characteristicsValues->add($charValue);
-            $this->addCharacteristics($charValue->getCharacteristic());
+    public function addCharacteristicsValues(Entity\CharacteristicValueInterface $charValue){
+        $this->characteristicsValues->add($charValue);
+    }
+
+    public function removeCharacteristicsValues(Entity\CharacteristicValueInterface $charValue){
+        if ($this->getCharacteristicsValues()->contains($charValue)) {
+            $this->getCharacteristicsValues()->removeElement($charValue);
         }
     }
 

@@ -12,21 +12,20 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('mtt_catalog');
 
-        $rootNode
-            ->children()
-                ->scalarNode('product_entity')->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('category_entity')->defaultNull()->cannotBeEmpty()->end()
-                ->scalarNode('characteristic_entity')->defaultNull()->cannotBeEmpty()->end()
-                ->scalarNode('characteristic_value_entity')->defaultNull()
-            ->end()
+        $rootNode->children()
+                    ->scalarNode('product_entity')->isRequired()->cannotBeEmpty()->end()
+                    ->scalarNode('category_entity')->defaultNull()->cannotBeEmpty()->end()
+                    ->scalarNode('characteristic_entity')->defaultNull()->cannotBeEmpty()->end()
+                    ->scalarNode('characteristic_value_entity')->defaultNull()->cannotBeEmpty()->end()
+                    ->scalarNode('product_on_page')->defaultNull()->cannotBeEmpty()->end()
+                    ->scalarNode('easy_admin_integration')->defaultNull()
+                ->end()
             ->end();
 
 

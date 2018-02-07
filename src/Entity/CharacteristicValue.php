@@ -3,13 +3,13 @@
 namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Mtt\Core\Interfaces\Catalog\Entity\CharValueInterface;
+use Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\MappedSuperclass
  */
-abstract class CharValue implements CharValueInterface
+abstract class CharacteristicValue implements CharacteristicValueInterface
 {
     /**
      * @var string
@@ -37,7 +37,7 @@ abstract class CharValue implements CharValueInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Characteristic
      *
-     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharInterface", inversedBy="valuesCollection", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface", inversedBy="valuesCollection", fetch="EXTRA_LAZY")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id")
      * })
