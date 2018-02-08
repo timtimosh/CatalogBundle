@@ -7,9 +7,16 @@
       "email": "mrtimosh@gmail.com"
     }
   ],
+ "repositories": [
+	 {
+            "type": "vcs",
+            "url": "https://github.com/timtimosh/MttCoreBundle"
+        }
+  ],
   "require": {
 	"php": ">=7.1",
-	"symfony/symfony": "~3.4.0"
+	"symfony/symfony": "~3.4.0",
+	"mtt/core": "dev-master"
    },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^3.0",
