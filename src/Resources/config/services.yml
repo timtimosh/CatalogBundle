@@ -12,3 +12,9 @@ services:
             - '@cocur_slugify'
         tags:
             - { name: doctrine.orm.entity_listener }
+
+   mtt_catalog.product.filter_service:
+        class: Mtt\CatalogBundle\Service\ProductFilterService
+        arguments:
+            - '@request_stack'
+            - '%mtt_catalog.product_entity%'

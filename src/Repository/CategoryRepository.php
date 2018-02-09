@@ -4,13 +4,12 @@ namespace Mtt\CatalogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Mtt\CatalogBundle\Entity\Category;
-use Mtt\CatalogBundle\Entity\Product;
 
 class CategoryRepository extends EntityRepository
 {
     public function findAllActive($limit = 0, $execute = false)
     {
-        $qb = $this->createProductQuery();
+        $qb = $this->createCategoryQuery();
         $this->activeQuery($qb);
 
         if($limit){
@@ -24,7 +23,7 @@ class CategoryRepository extends EntityRepository
 
     public function findOneActiveBySlug($slug){
 
-        $qb = $this->createPageQuery();
+        $qb = $this->createCategoryQuery();
         $this->activeQuery($qb);
 
         $qb->andWhere('p.slug = :slug');
@@ -42,10 +41,10 @@ class CategoryRepository extends EntityRepository
     protected function activeQuery($qb){
         $qb->where('p.active = :active');
         // ->andWhere('f.end <= :end')
-        $qb->setParameter('active', Category::ACTIVE);
+        $qb->setParameter('active', Category::CATEGORY_ACTIVE);
     }
 
-    protected function createProductQuery(){
+    protected function createCategoryQuery(){
         $qb = $this->_em->createQueryBuilder();
         $qb->select('p')
             ->from($this->_entityName, 'p');

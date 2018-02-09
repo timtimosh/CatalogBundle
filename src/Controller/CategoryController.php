@@ -32,7 +32,6 @@ class CategoryController extends Controller
     public function categoryAction($slug, Request $request)
     {
         $category = $this->loadCategory($slug);
-
         if (null === $category) {
             throw $this->createNotFoundException('This category does not exist');
         }
@@ -44,8 +43,11 @@ class CategoryController extends Controller
         // parameters to template
         $paginator = $this->get('knp_paginator');
 
+        $filter = $this->get('mtt_catalog.product.filter_service');
+        $productCollection = $filter->loadProductCollectionFromRequest($this->getDoctrine()->getManager());
+
         $pagination = $paginator->paginate(
-            $this->getProductRepository()->findAllActive(), /* query NOT result */
+            $productCollection, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             $this->getLimit()/*limit per page*/
         );
@@ -62,17 +64,7 @@ class CategoryController extends Controller
 
     protected function getLimit(): int
     {
-        return self::PRODUCTS_PER_PAGE;
-    }
-
-    protected function getSinglePageTemplate(CategoryInterface $category): string
-    {
-        if (null === $category->getTemplate() || '' === $category->getTemplate()) {
-            $view = '@easypage_templates/show.html.twig';
-        } else {
-            $view = $category->getTemplate();
-        }
-        return $view;
+        return $this->getParameter('mtt_catalog.products_per_page');
     }
 
 }

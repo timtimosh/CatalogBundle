@@ -18,7 +18,7 @@ class ProductRepository extends EntityRepository
         if($execute){
             return $qb->getQuery()->execute();
         }
-        return $qb->getQuery();
+        return $qb;
     }
 
     public function findOneActiveBySlug($slug){

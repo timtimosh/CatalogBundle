@@ -23,3 +23,5 @@ easy_admin:
                 fields: ['id', 'sku', 'idErp', 'type', { property: 'mainImage', template: '@catalog_templates\easy_admin\vich_uploader_image.html.twig', base_path: '%mtt_catalog.image_path_to_product%' }, 'name', 'active', 'price']
         Categories:
             class: '%mtt_catalog.category_entity%'
+            list:
+                fields: ['id', 'name', 'slug', 'active']
