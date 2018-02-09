@@ -94,12 +94,12 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="url_key", type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
-    protected $url_key;
+    protected $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", mappedBy="characteristic", cascade={"remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", mappedBy="characteristic", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     protected $valuesCollection;
 
@@ -139,6 +139,9 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function setCharOptionType(int $charOptionType)
     {
+        if(!in_array($charOptionType, [self::OPTION_VIEW_TYPE_RADIO, self::OPTION_VIEW_TYPE_SELECT])){
+            throw new \InvalidArgumentException("Invalid Characteristic option type");
+        }
         $this->charOptionType = $charOptionType;
     }
 
@@ -270,17 +273,17 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @return string
      */
-    public function getUrlKey(): string
+    public function getSlug(): string
     {
-        return $this->url_key;
+        return $this->slug;
     }
 
     /**
      * @param string $url_key
      */
-    public function setUrlKey(string $url_key)
+    public function setSlug(string $slug)
     {
-        $this->url_key = $url_key;
+        $this->slug= $slug;
     }
 
 

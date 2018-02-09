@@ -17,14 +17,21 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class Product implements Entity\ProductInterface
 {
-    const ONSITE = 0;
-    const NOT_ONSITE = 1;
+    const ONSITE = 1;
+    const NOT_ONSITE = 0;
 
-    const ACTIVE = 0;
-    const NOT_ACTIVE = 1;
+    const ACTIVE = 1;
+    const NOT_ACTIVE = 0;
 
-    const ONERP = 0;
-    const NOT_ONERP = 1;
+    const ONERP = 1;
+    const NOT_ONERP = 0;
+
+
+    const PRODUCT_TYPE_SIMPLE = 'simple';
+    const PRODUCT_TYPE_COMPLEX = 'complex';
+    const PRODUCT_TYPE_WITH_VARIANTS = 'variant';
+
+
     /**
      * @var string
      *
@@ -99,7 +106,7 @@ abstract class Product implements Entity\ProductInterface
 
     /**
      * Many Product have Many Characteristics value.
-     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", fetch="EXTRA_LAZY", cascade={"persist"})
      * @ORM\JoinTable(name="mtt_catalog_product_characteristic_values",
      *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="char_value", referencedColumnName="id")}
@@ -164,17 +171,10 @@ abstract class Product implements Entity\ProductInterface
      */
     protected $metaKeyword;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tag", type="text", length=255, nullable=true)
-     */
-    protected $tag;
-
 
     /**
      * Many products have Many categories.
-     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface", inversedBy="products", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface", fetch="EXTRA_LAZY", cascade={"persist"})
      * @ORM\JoinTable(name="mtt_catalog_product_to_category",
      *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="category", referencedColumnName="id")}
@@ -191,7 +191,7 @@ abstract class Product implements Entity\ProductInterface
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="mtt_easypage_image", fileNameProperty="mainImage")
+     * @Vich\UploadableField(mapping="mtt_catalog_product_image", fileNameProperty="mainImage")
      * @var File
      */
     protected $mainImageFile;
@@ -212,14 +212,39 @@ abstract class Product implements Entity\ProductInterface
      */
     protected $parent;
 
+    /**
+    * @ORM\Column(type="string", length=20, nullable=false)
+    */
+    protected $type;
+
 
     public function __construct()
     {
         $this->characteristicsValues = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->mainImage = new EmbeddedFile();
-        $this->updatedAt = $this->createdAt = new \DateTime();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType():string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType(string $type)
+    {
+        if (!in_array(
+            $type, [self::PRODUCT_TYPE_COMPLEX, self::PRODUCT_TYPE_SIMPLE, self::PRODUCT_TYPE_WITH_VARIANTS])
+        ) {
+            throw new \InvalidArgumentException("Invalid product type");
+        }
+        $this->type = $type;
+    }
+
 
     /**
      * @return string
@@ -269,7 +294,7 @@ abstract class Product implements Entity\ProductInterface
         if (null !== $image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->updatedTimestamps();
         }
     }
 
@@ -456,11 +481,7 @@ abstract class Product implements Entity\ProductInterface
         $this->price = $price;
     }
 
-    /**
-     *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+
     public function updatedTimestamps()
     {
         $this->updatedAt = new \DateTime('now');
@@ -577,7 +598,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getShortDescription()
+    public function getShortDescription(): string
     {
         return $this->shortDescription;
     }
@@ -585,10 +606,12 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $shortDescription
      */
-    public function setShortDescription($shortDescription)
+    public function setShortDescription(string $shortDescription): void
     {
         $this->shortDescription = $shortDescription;
     }
+
+
 
     /**
      * @return string
@@ -622,28 +645,6 @@ abstract class Product implements Entity\ProductInterface
         $this->metaKeyword = $metaKeyword;
     }
 
-    /**
-     * @return string
-     */
-    public function getTag()
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @param string $tag
-     */
-    public function setTag($tag)
-    {
-        $this->tag = $tag;
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue() {
-        $this->setUpdatedAt(new \DateTime());
-    }
 
     public function __toString()
     {

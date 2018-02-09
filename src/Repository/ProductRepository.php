@@ -23,7 +23,7 @@ class ProductRepository extends EntityRepository
 
     public function findOneActiveBySlug($slug){
 
-        $qb = $this->createPageQuery();
+        $qb = $this->createProductQuery();
         $this->activeQuery($qb);
 
         $qb->andWhere('p.slug = :slug');

@@ -2,6 +2,7 @@
 
 namespace Mtt\CatalogBundle\Controller;
 
+use Mtt\CatalogBundle\Service\ProductService;
 use Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,49 +23,48 @@ class CategoryController extends Controller
 
     use RepositoriesTrait;
 
-    protected $category;
 
-    public function indexAction($slug)
+    public function indexAction(Request $request)
     {
-        $this->loadCategory($slug);
+        return $this->productList($request);
+    }
 
-        $this->maybe404();
+    public function categoryAction($slug, Request $request)
+    {
+        $category = $this->loadCategory($slug);
 
+        if (null === $category) {
+            throw $this->createNotFoundException('This category does not exist');
+        }
+
+        return $this->productList($request);
+    }
+
+    protected function productList(Request $request){
+        // parameters to template
         $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $this->getCategoryRepository()->findAllActive(), /* query NOT result */
+            $this->getProductRepository()->findAllActive(), /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             $this->getLimit()/*limit per page*/
         );
 
-        // parameters to template
-        return $this->render('@easypage_templates/list.html.twig',
+        return $this->render('@catalog_templates/product/list.html.twig',
             array('pagination' => $pagination)
         );
-
-
-
-        $view = $this->getSinglePageTemplate($category);
-        return $this->render($view, array(
-            'page' => $page,
-        ));
     }
 
     protected function loadCategory(string $slug){
-        $this->category = $this->getCategoryRepository()->findOneActiveBySlug($slug);
+        return $this->getCategoryRepository()->findOneActiveBySlug($slug);
     }
 
-    protected function maybe404(string $slug){
-        if (null === $this->category) {
-            throw $this->createNotFoundException('This category does not exist');
-        }
-    }
 
     protected function getLimit(): int
     {
         return self::PRODUCTS_PER_PAGE;
     }
+
     protected function getSinglePageTemplate(CategoryInterface $category): string
     {
         if (null === $category->getTemplate() || '' === $category->getTemplate()) {
@@ -74,7 +74,5 @@ class CategoryController extends Controller
         }
         return $view;
     }
-
-
 
 }

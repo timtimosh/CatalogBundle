@@ -49,7 +49,7 @@ abstract class Category implements CategoryInterface
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    protected $active = self::PRODUCT_ACTIVE;
+    protected $active = self::CATEGORY_ACTIVE;
 
 
     /**
@@ -101,11 +101,6 @@ abstract class Category implements CategoryInterface
      */
     protected $metaKeyword;
 
-    /**
-     *
-     * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface", fetch="EXTRA_LAZY", mappedBy="categories")
-     */
-    protected $products;
 
     /**
      * @var string
@@ -120,9 +115,10 @@ abstract class Category implements CategoryInterface
     protected $template;
 
 
+
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+       // $this->products = new ArrayCollection();
     }
 
     /**

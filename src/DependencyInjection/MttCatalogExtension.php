@@ -1,5 +1,4 @@
 <?php
-
 namespace Mtt\CatalogBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -9,6 +8,7 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
+
 /**
  * This is the class that loads and manages your bundle configuration.
  *
@@ -16,8 +16,10 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
  */
 class MttCatalogExtension extends Extension implements PrependExtensionInterface, CompilerPassInterface
 {
-    public function load(array $configs, ContainerBuilder $container){
-
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
     }
 
     public function prepend(ContainerBuilder $container)
@@ -29,6 +31,10 @@ class MttCatalogExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('mtt_catalog.category_entity', $myBundleConfig['category_entity']);
         $container->setParameter('mtt_catalog.characteristic_entity', $myBundleConfig['characteristic_entity']);
         $container->setParameter('mtt_catalog.characteristic_value_entity', $myBundleConfig['characteristic_value_entity']);
+        $container->setParameter('mtt_catalog.products_per_page', $myBundleConfig['product_on_page']);
+
+        $container->setParameter('mtt_catalog.image_path_to_product', $myBundleConfig['image_path'].'/product');
+
 
         if(!empty($myBundleConfig['easy_admin_integration'])) {
             $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../EasyAdminIntegration/Resources/config'));

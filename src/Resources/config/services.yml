@@ -1,0 +1,14 @@
+services:
+   mtt_catalog.product.service:
+        class: Mtt\CatalogBundle\Service\ProductService
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%mtt_catalog.product_entity%'
+            - '@router.default'
+
+   mtt_catalog.doctrine.product_listener:
+        class: Mtt\CatalogBundle\Listeners\Doctrine\ProductListener
+        arguments:
+            - '@cocur_slugify'
+        tags:
+            - { name: doctrine.orm.entity_listener }

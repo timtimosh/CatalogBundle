@@ -14,7 +14,7 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=255, nullable=false)
+     * @ORM\Column(name="value", type="string", length=50, nullable=false)
      */
     protected $value;
 
@@ -37,7 +37,7 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Characteristic
      *
-     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface", inversedBy="valuesCollection", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface", inversedBy="valuesCollection", fetch="EXTRA_LAZY", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id")
      * })
@@ -61,9 +61,9 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=64, nullable=true)
+     * @ORM\Column(name="slug", type="string", length=64, nullable=true)
      */
-    protected $url;
+    protected $slug;
 
     /**
      * @var string
@@ -108,11 +108,133 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     protected $metaKeyword;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tag", type="string", length=255, nullable=true)
+     * @return string
      */
-    protected $tag;
+    public function getNameAlt()
+    {
+        return $this->nameAlt;
+    }
+
+    /**
+     * @param string $nameAlt
+     */
+    public function setNameAlt($nameAlt)
+    {
+        $this->nameAlt = $nameAlt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return $this->shortDescription;
+    }
+
+    /**
+     * @param string $shortDescription
+     */
+    public function setShortDescription($shortDescription)
+    {
+        $this->shortDescription = $shortDescription;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoTitle()
+    {
+        return $this->seoTitle;
+    }
+
+    /**
+     * @param string $seoTitle
+     */
+    public function setSeoTitle($seoTitle)
+    {
+        $this->seoTitle = $seoTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoH1()
+    {
+        return $this->seoH1;
+    }
+
+    /**
+     * @param string $seoH1
+     */
+    public function setSeoH1($seoH1)
+    {
+        $this->seoH1 = $seoH1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * @param string $metaDescription
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaKeyword()
+    {
+        return $this->metaKeyword;
+    }
+
+    /**
+     * @param string $metaKeyword
+     */
+    public function setMetaKeyword($metaKeyword)
+    {
+        $this->metaKeyword = $metaKeyword;
+    }
+
 
 
     /**

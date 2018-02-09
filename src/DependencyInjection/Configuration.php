@@ -24,6 +24,8 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('characteristic_entity')->defaultNull()->cannotBeEmpty()->end()
                     ->scalarNode('characteristic_value_entity')->defaultNull()->cannotBeEmpty()->end()
                     ->scalarNode('product_on_page')->defaultNull()->cannotBeEmpty()->end()
+                    ->scalarNode('image_path')->defaultNull()->cannotBeEmpty()->end()
+
                     ->scalarNode('easy_admin_integration')->defaultNull()
                 ->end()
             ->end();

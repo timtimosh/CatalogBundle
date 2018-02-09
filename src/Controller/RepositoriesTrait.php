@@ -14,16 +14,16 @@ use Mtt\CatalogBundle\Repository\ProductRepository;
 
 trait RepositoriesTrait
 {
-    protected function getProductRepository():ProductRepository
+    protected function getProductRepository(): ProductRepository
     {
-        return $this->getProductRepository(
+        return $this->getEntityRepository(
             $this->getParameter('mtt_catalog.product_entity')
         );
     }
 
     protected function getCategoryRepository(): CategoryRepository
     {
-        return $this->getProductRepository(
+        return $this->getEntityRepository(
             $this->getParameter('mtt_catalog.category_entity')
         );
     }

@@ -3,6 +3,7 @@
 namespace Mtt\CatalogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Mtt\CatalogBundle\Entity\Category;
 use Mtt\CatalogBundle\Entity\Product;
 
 class CategoryRepository extends EntityRepository
@@ -41,7 +42,7 @@ class CategoryRepository extends EntityRepository
     protected function activeQuery($qb){
         $qb->where('p.active = :active');
         // ->andWhere('f.end <= :end')
-        $qb->setParameter('active', Product::ACTIVE);
+        $qb->setParameter('active', Category::ACTIVE);
     }
 
     protected function createProductQuery(){

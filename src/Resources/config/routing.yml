@@ -1,12 +1,12 @@
-catalog:
+catalog_list:
     path:  /catalog
-    defaults: { _controller: "MttCatalogBundle:Product:index" }
-
-catalog_category:
-    path:  /catalog/category/{slug}
     defaults: { _controller: "MttCatalogBundle:Category:index" }
 
-catalog_show:
+catalog_category_list:
+    path:  /catalog/category/{slug}
+    defaults: { _controller: "MttCatalogBundle:Category:category" }
+
+catalog_product_show:
     path:  /catalog/product/{slug}
     defaults: { _controller: "MttCatalogBundle:Product:show" }
     

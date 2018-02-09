@@ -17,40 +17,27 @@ use LittleHouse\CatalogBundle\Entity\Product;
  */
 class ProductController extends Controller
 {
+    use RepositoriesTrait;
+
     /**
-     * Finds and displays a Page entity.
+     * Finds and displays a Product entity.
      * @var $page BasePage
      *
      */
     public function showAction($slug)
     {
-        $page = $this->getPageRepository()->findOneActiveBySlug($slug);
-        if (!$page) {
-            throw $this->createNotFoundException('The page does not exist');
+        $product = $this->getProductRepository()->findOneActiveBySlug($slug);
+        if (!$product) {
+            throw $this->createNotFoundException('The product does not exist');
         }
-        $view = $this->getSinglePageTemplate($page);
+        $view = $this->getProductTemplate($product);
         return $this->render($view, array(
-            'page' => $page,
+            'product' => $product,
         ));
     }
 
-    protected function getSinglePageTemplate($page):string {
-        if (null === $page->getPageTemplate() || '' === $page->getPageTemplate()) {
-            $view = '@easypage_templates/show.html.twig';
-        } else {
-            $view = $page->getPageTemplate();
-        }
-        return $view;
-    }
-
-    /**
-     * @return BasePageRepository
-     */
-    protected function getPageRepository()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $pageEntity = $this->getParameter('mtt_easy_page.page_entity');
-        return $em->getRepository($pageEntity);
+    protected function getProductTemplate($product){
+        return '@catalog_templates/product/show.html.twig';
     }
 
 }

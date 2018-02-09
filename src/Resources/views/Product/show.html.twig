@@ -1,162 +1,23 @@
-{% extends 'PetkoparaCrudGeneratorBundle::base.html.twig' %}
+{% extends 'base.html.twig' %}
+{% if product.seoTitle != null %}
+    {% block title %}
+        {{ product.seoTitle }}
+    {% endblock %}
+{% endif %}
 
-{% block title %}
-{{ parent() }} - product
+{% block content %}
+    <h1>{{ product.name }}</h1>
+
+    {% if vich_uploader_asset(product, 'mainImageFile') != null %}
+        <img src="{{ asset(vich_uploader_asset(page, 'mainImageFile')) | imagine_filter('easypage_show_thumb') }}" alt="{{ product.name }}">
+
+    {% endif %}
+
+    {{ product.description  | raw }}
 {% endblock %}
 
-{% block body %}
-
-<div id="top" class="row">
-    <div class="page-header">
-        <h2>View product <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </h2>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <p><strong>Iderp</strong></p>
-        <p>
-            {{ product.idErp }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Sku</strong></p>
-        <p>
-            {{ product.sku }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Onsite</strong></p>
-        <p>
-            {% if product.onSite %}Yes{% else %}No{% endif %}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Onerp</strong></p>
-        <p>
-            {% if product.onErp %}Yes{% else %}No{% endif %}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Active</strong></p>
-        <p>
-            {% if product.active %}Yes{% else %}No{% endif %}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Sortorder</strong></p>
-        <p>
-            {{ product.sortOrder }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Price</strong></p>
-        <p>
-            {{ product.price }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Createdat</strong></p>
-        <p>
-            {% if product.createdAt %}{{ product.createdAt|date('Y-m-d H:i:s') }}{% endif %}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Updatedat</strong></p>
-        <p>
-            {% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Id</strong></p>
-        <p>
-            {{ product.id }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Name</strong></p>
-        <p>
-            {{ product.name }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Namealt</strong></p>
-        <p>
-            {{ product.nameAlt }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Seotitle</strong></p>
-        <p>
-            {{ product.seoTitle }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Seoh1</strong></p>
-        <p>
-            {{ product.seoH1 }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Description</strong></p>
-        <p>
-            {{ product.description }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Shortdescription</strong></p>
-        <p>
-            {{ product.shortDescription }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Metadescription</strong></p>
-        <p>
-            {{ product.metaDescription }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Metakeyword</strong></p>
-        <p>
-            {{ product.metaKeyword }}
-        </p>
-
-    </div>
-    <div class="col-md-6">
-        <p><strong>Tag</strong></p>
-        <p>
-            {{ product.tag }}
-        </p>
-
-    </div></div>
-
-<hr/>
 
 
-<div class="form-group">
-    <a class="btn btn-default" href="{{ path('catalog') }}">
-        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-        Back to list
-    </a>
-</div>
 
 
-{% endblock %}
 
