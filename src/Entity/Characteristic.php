@@ -14,17 +14,17 @@ abstract class Characteristic implements CharacteristicInterface
     const OPTION_VIEW_TYPE_SELECT = 0;
     const OPTION_VIEW_TYPE_RADIO = 1;
 
-    const ACTIVE = 0;
-    const UNACTIVE = 1;
+    const ACTIVE = 1;
+    const UNACTIVE = 0;
 
-    const ONSEARCH = 0;
-    const NOT_ONSEARCH = 1;
+    const ONSEARCH = 1;
+    const NOT_ONSEARCH = 0;
 
-    const ONINDEX = 0;
-    const NOT_ONINDEX = 1;
+    const ONINDEX = 1;
+    const NOT_ONINDEX = 0;
 
-    const ISVISIBLE = 0;
-    const NOT_ISVISIBLE = 1;
+    const ISVISIBLE = 1;
+    const NOT_ISVISIBLE = 0;
 
     /**
      * @var string
@@ -94,12 +94,12 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", mappedBy="characteristic", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", mappedBy="characteristic", cascade={"remove"}, fetch="EXTRA_LAZY")
      */
     protected $valuesCollection;
 
@@ -113,7 +113,15 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function getValuesCollection()
     {
-        return $this->valueCollection;
+        return $this->valuesCollection;
+    }
+
+    /**
+     * @param mixed $valuesCollection
+     */
+    public function setValuesCollection($valuesCollection)
+    {
+        $this->valuesCollection = $valuesCollection;
     }
 
 
@@ -123,7 +131,7 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function getId(): int
     {
-        return $this->idChar;
+        return $this->id;
     }
 
     /**

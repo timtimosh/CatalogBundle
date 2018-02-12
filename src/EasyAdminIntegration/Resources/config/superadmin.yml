@@ -2,7 +2,7 @@ easy_admin:
     entities:
         Products:
             class: '%mtt_catalog.product_entity%'
-            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+            form:
                 fields:
                     - name
                     - sku
@@ -19,9 +19,27 @@ easy_admin:
                     - onSite
                     - seoH1
                     - seoTitle
+                    - characteristicsValues
             list:
                 fields: ['id', 'sku', 'idErp', 'type', { property: 'mainImage', template: '@catalog_templates\easy_admin\vich_uploader_image.html.twig', base_path: '%mtt_catalog.image_path_to_product%' }, 'name', 'active', 'price']
         Categories:
             class: '%mtt_catalog.category_entity%'
+            list:
+                fields: ['id', 'name', 'slug', 'active']
+        Characteristics:
+            class: '%mtt_catalog.characteristic_entity%'
+            list:
+                fields: ['id', 'name', 'slug', 'active']
+            form:
+                fields:
+                    - name
+                    - active
+                    - onSearch
+                    - onIndex
+                    - isVisible
+                    - slug
+                    - valuesCollection
+        CharacteristicValues:
+            class: '%mtt_catalog.characteristic_value_entity%'
             list:
                 fields: ['id', 'name', 'slug', 'active']

@@ -3,6 +3,7 @@
 namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface;
 use Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -61,7 +62,7 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=64, nullable=true)
+     * @ORM\Column(name="slug", type="string", length=64, nullable=false)
      */
     protected $slug;
 
@@ -280,7 +281,7 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @return Characteristic
      */
-    public function getCharacteristic(): Characteristic
+    public function getCharacteristic(): CharacteristicInterface
     {
         return $this->characteristic;
     }
@@ -288,7 +289,7 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param Characteristic $char
      */
-    public function setCharacteristic(Characteristic $char)
+    public function setCharacteristic(CharacteristicInterface $char)
     {
         $this->characteristic = $char;
     }
