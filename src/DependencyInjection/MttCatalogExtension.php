@@ -1,6 +1,10 @@
 <?php
 namespace Mtt\CatalogBundle\DependencyInjection;
 
+use Mtt\CatalogBundle\Entity\Category;
+use Mtt\CatalogBundle\Entity\Characteristic;
+use Mtt\CatalogBundle\Entity\CharacteristicValue;
+use Mtt\CatalogBundle\Entity\Product;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -27,10 +31,10 @@ class MttCatalogExtension extends Extension implements PrependExtensionInterface
         $configs = $container->getExtensionConfig($this->getAlias());
         $myBundleConfig = $this->processConfiguration(new Configuration(), $configs);
 
-        $container->setParameter('mtt_catalog.product_entity', $myBundleConfig['product_entity']);
-        $container->setParameter('mtt_catalog.category_entity', $myBundleConfig['category_entity']);
-        $container->setParameter('mtt_catalog.characteristic_entity', $myBundleConfig['characteristic_entity']);
-        $container->setParameter('mtt_catalog.characteristic_value_entity', $myBundleConfig['characteristic_value_entity']);
+        $container->setParameter(Product::PRODUCT_ALIAS, $myBundleConfig['product_entity']);
+        $container->setParameter(Category::CATEGORY_ALIAS, $myBundleConfig['category_entity']);
+        $container->setParameter(Characteristic::CHARACTERISTIC_ALIAS, $myBundleConfig['characteristic_entity']);
+        $container->setParameter(CharacteristicValue::CHARACTERISTIC_VALUES_ALIAS, $myBundleConfig['characteristic_value_entity']);
         $container->setParameter('mtt_catalog.products_per_page', $myBundleConfig['product_on_page']);
 
         $container->setParameter('mtt_catalog.image_path_to_product', $myBundleConfig['image_path'].'/product');

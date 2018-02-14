@@ -7,7 +7,7 @@ use Mtt\CatalogBundle\Entity\Category;
 
 class CategoryRepository extends EntityRepository
 {
-    public function findAllActive($limit = 0, $execute = false)
+    public function findAllActive($limit = 0)
     {
         $qb = $this->createCategoryQuery();
         $this->activeQuery($qb);
@@ -15,10 +15,8 @@ class CategoryRepository extends EntityRepository
         if($limit){
             $qb->setMaxResults($limit);
         }
-        if($execute){
-            return $qb->getQuery()->execute();
-        }
-        return $qb->getQuery();
+
+        return $qb;
     }
 
     public function findOneActiveBySlug($slug){
@@ -26,7 +24,7 @@ class CategoryRepository extends EntityRepository
         $qb = $this->createCategoryQuery();
         $this->activeQuery($qb);
 
-        $qb->andWhere('p.slug = :slug');
+        $qb->andWhere('c.slug = :slug');
         $qb->setParameter('slug', $slug);
 
         $qb->setMaxResults(1);
@@ -39,15 +37,15 @@ class CategoryRepository extends EntityRepository
      * @param $qb QueryBuilder
      */
     protected function activeQuery($qb){
-        $qb->where('p.active = :active');
+        $qb->where('c.active = :active');
         // ->andWhere('f.end <= :end')
         $qb->setParameter('active', Category::CATEGORY_ACTIVE);
     }
 
     protected function createCategoryQuery(){
         $qb = $this->_em->createQueryBuilder();
-        $qb->select('p')
-            ->from($this->_entityName, 'p');
+        $qb->select('c')
+            ->from($this->_entityName, 'c');
         return $qb;
     }
 

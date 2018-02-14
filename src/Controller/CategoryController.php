@@ -2,16 +2,8 @@
 
 namespace Mtt\CatalogBundle\Controller;
 
-use Mtt\CatalogBundle\Service\ProductService;
-use Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\View\TwitterBootstrap3View;
-
-use LittleHouse\CatalogBundle\Entity\Product;
 
 /**
  * Product controller.
@@ -53,7 +45,9 @@ class CategoryController extends Controller
         );
 
         return $this->render('@catalog_templates/product/list.html.twig',
-            array('pagination' => $pagination)
+            array(
+                'pagination' => $pagination
+            )
         );
     }
 

@@ -5,9 +5,35 @@ services:
             - '@doctrine.orm.entity_manager'
             - '%mtt_catalog.product_entity%'
             - '@router.default'
-
+   mtt_catalog.category.service:
+        class: Mtt\CatalogBundle\Service\CategoryService
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%mtt_catalog.category_entity%'
+            - '@router.default'
    mtt_catalog.doctrine.product_listener:
         class: Mtt\CatalogBundle\Listeners\Doctrine\ProductListener
+        arguments:
+            - '@cocur_slugify'
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+   mtt_catalog.doctrine.category_listener:
+        class: Mtt\CatalogBundle\Listeners\Doctrine\CategoryListener
+        arguments:
+            - '@cocur_slugify'
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+   mtt_catalog.doctrine.characteristic_listener:
+        class: Mtt\CatalogBundle\Listeners\Doctrine\CharacteristicListener
+        arguments:
+            - '@cocur_slugify'
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+   mtt_catalog.doctrine.characteristic_value_listener:
+        class: Mtt\CatalogBundle\Listeners\Doctrine\CharacteristicValueListener
         arguments:
             - '@cocur_slugify'
         tags:

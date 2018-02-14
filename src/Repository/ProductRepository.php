@@ -7,16 +7,13 @@ use Mtt\CatalogBundle\Entity\Product;
 
 class ProductRepository extends EntityRepository
 {
-    public function findAllActive($limit = 0, $execute = false)
+    public function findAllActive($limit = 0)
     {
         $qb = $this->createProductQuery();
         $this->activeQuery($qb);
 
         if($limit){
             $qb->setMaxResults($limit);
-        }
-        if($execute){
-            return $qb->getQuery()->execute();
         }
         return $qb;
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Mtt\CatalogBundle\Entity;
 
@@ -6,15 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface;
 use Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
  */
 abstract class CharacteristicValue implements CharacteristicValueInterface
 {
+    const CHARACTERISTIC_VALUES_ALIAS = 'mtt_catalog.characteristic_value_entity';
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="value", type="string", length=50, nullable=false)
      */
     protected $value;
@@ -38,30 +41,17 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @var \Mtt\CatalogBundle\Entity\Characteristic
      *
-     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface", inversedBy="valuesCollection", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface", inversedBy="valuesCollection")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="characteristic", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     protected $characteristic;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true)
-     */
-    protected $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name_alt", type="string", length=50, nullable=true)
-     */
-    protected $nameAlt;
-
-    /**
-     * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="slug", type="string", length=64, nullable=false)
      */
     protected $slug;
@@ -111,23 +101,7 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @return string
      */
-    public function getNameAlt()
-    {
-        return $this->nameAlt;
-    }
-
-    /**
-     * @param string $nameAlt
-     */
-    public function setNameAlt($nameAlt)
-    {
-        $this->nameAlt = $nameAlt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -135,15 +109,13 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param string $slug
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug)
     {
         $this->slug = $slug;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortDescription()
+
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
@@ -151,15 +123,13 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param string $shortDescription
      */
-    public function setShortDescription($shortDescription)
+    public function setShortDescription(string $shortDescription)
     {
         $this->shortDescription = $shortDescription;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -167,15 +137,13 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
 
-    /**
-     * @return string
-     */
-    public function getSeoTitle()
+
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
@@ -183,15 +151,13 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param string $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(string $seoTitle)
     {
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @return string
-     */
-    public function getSeoH1()
+
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
@@ -199,15 +165,13 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param string $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(string $seoH1)
     {
         $this->seoH1 = $seoH1;
     }
 
-    /**
-     * @return string
-     */
-    public function getMetaDescription()
+
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
@@ -215,15 +179,13 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param string $metaDescription
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(string $metaDescription)
     {
         $this->metaDescription = $metaDescription;
     }
 
-    /**
-     * @return string
-     */
-    public function getMetaKeyword()
+
+    public function getMetaKeyword(): ?string
     {
         return $this->metaKeyword;
     }
@@ -231,17 +193,13 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @param string $metaKeyword
      */
-    public function setMetaKeyword($metaKeyword)
+    public function setMetaKeyword(string $metaKeyword)
     {
         $this->metaKeyword = $metaKeyword;
     }
 
 
-
-    /**
-     * @return string
-     */
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -257,7 +215,7 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
     /**
      * @return string
      */
-    public function getIdErp(): string
+    public function getIdErp(): ?string
     {
         return $this->idErp;
     }
@@ -270,18 +228,14 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
         $this->idErp = $idErp;
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Characteristic
-     */
-    public function getCharacteristic(): CharacteristicInterface
+
+    public function getCharacteristic(): ?CharacteristicInterface
     {
         return $this->characteristic;
     }
@@ -299,8 +253,9 @@ abstract class CharacteristicValue implements CharacteristicValueInterface
         return $this->getCharacteristic()->getName();
     }
 
-    public function __toString(){
-        return $this->getName().': '.$this->getValue();
+    public function __toString()
+    {
+        return $this->getName() . ': ' . $this->getValue();
     }
 }
 

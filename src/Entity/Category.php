@@ -1,18 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
  */
-
 abstract class Category implements CategoryInterface
 {
-
+    const CATEGORY_ALIAS = 'mtt_catalog.category_entity';
     const CATEGORY_ACTIVE = 1;
     /**
      * @var integer
@@ -32,14 +34,15 @@ abstract class Category implements CategoryInterface
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4)
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     protected $name;
 
     /**
      * One Page has One parent Page.
-     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
@@ -104,7 +107,8 @@ abstract class Category implements CategoryInterface
 
     /**
      * @var string
-     * @ORM\Column(type="text", length=255, nullable=false)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="slug", type="string", length=100, nullable=false)
      */
     protected $slug;
 
@@ -115,16 +119,15 @@ abstract class Category implements CategoryInterface
     protected $template;
 
 
-
     public function __construct()
     {
-       // $this->products = new ArrayCollection();
+        // $this->products = new ArrayCollection();
     }
 
     /**
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate(): ?string
     {
         return $this->template;
     }
@@ -132,33 +135,25 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $template
      */
-    public function setTemplate($template)
+    public function setTemplate(string $template)
     {
         $this->template = $template;
     }
 
 
-    /**
-     * @return mixed
-     */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug($slug)
+
+    public function setSlug(string $slug)
     {
         $this->slug = $slug;
     }
 
 
-    /**
-     * @return string
-     */
-    public function getIdErp()
+    public function getIdErp(): ?string
     {
         return $this->idErp;
     }
@@ -166,15 +161,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $idErp
      */
-    public function setIdErp($idErp)
+    public function setIdErp(string $idErp)
     {
         $this->idErp = $idErp;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -182,7 +175,7 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -190,7 +183,7 @@ abstract class Category implements CategoryInterface
     /**
      * @return int
      */
-    public function getParent()
+    public function getParent(): ?CategoryInterface
     {
         return $this->parent;
     }
@@ -203,12 +196,10 @@ abstract class Category implements CategoryInterface
         $this->parent = $parent;
     }
 
-    /**
-     * @return bool
-     */
-    public function isActive():bool
+
+    public function isActive(): bool
     {
-        return $this->active;
+        return $this->active ? true : false;
     }
 
     /**
@@ -219,10 +210,8 @@ abstract class Category implements CategoryInterface
         $this->active = $active;
     }
 
-    /**
-     * @return string
-     */
-    public function getNameAlt()
+
+    public function getNameAlt(): ?string
     {
         return $this->nameAlt;
     }
@@ -230,15 +219,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $nameAlt
      */
-    public function setNameAlt($nameAlt)
+    public function setNameAlt(string $nameAlt)
     {
         $this->nameAlt = $nameAlt;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescriptionShort()
+
+    public function getDescriptionShort(): ?string
     {
         return $this->descriptionShort;
     }
@@ -246,15 +233,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $descriptionShort
      */
-    public function setDescriptionShort($descriptionShort)
+    public function setDescriptionShort(string $descriptionShort)
     {
         $this->descriptionShort = $descriptionShort;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -262,15 +247,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
 
-    /**
-     * @return string
-     */
-    public function getSeoTitle()
+
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
@@ -278,15 +261,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(string $seoTitle)
     {
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @return string
-     */
-    public function getSeoH1()
+
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
@@ -294,15 +275,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(string $seoH1)
     {
         $this->seoH1 = $seoH1;
     }
 
-    /**
-     * @return string
-     */
-    public function getMetaDescription()
+
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
@@ -310,15 +289,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $metaDescription
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(string $metaDescription)
     {
         $this->metaDescription = $metaDescription;
     }
 
-    /**
-     * @return string
-     */
-    public function getMetaKeyword()
+
+    public function getMetaKeyword(): ?string
     {
         return $this->metaKeyword;
     }
@@ -326,34 +303,13 @@ abstract class Category implements CategoryInterface
     /**
      * @param string $metaKeyword
      */
-    public function setMetaKeyword($metaKeyword)
+    public function setMetaKeyword(string $metaKeyword)
     {
         $this->metaKeyword = $metaKeyword;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getProducts()
-    {
-        return $this->products;
-    }
 
-    /**
-     * @param mixed $products
-     */
-    public function setProducts($products)
-    {
-        $this->products->clear();
-        foreach ($products as $product){
-            $this->products->add($product);
-        }
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

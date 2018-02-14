@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappi
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Mtt\CatalogBundle\DependencyInjection\Compiler\DoctrineResolveTargetEntityPass;
+use Mtt\CatalogBundle\DependencyInjection\Compiler\TwigResolver;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
 class MttCatalogBundle extends Bundle

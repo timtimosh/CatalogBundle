@@ -1,16 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
  */
 abstract class Characteristic implements CharacteristicInterface
 {
+    const CHARACTERISTIC_ALIAS = 'mtt_catalog.characteristic_entity';
     const OPTION_VIEW_TYPE_SELECT = 0;
     const OPTION_VIEW_TYPE_RADIO = 1;
 
@@ -29,20 +33,20 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @var string
      *
+     *
      * @ORM\Column(name="id_erp", type="string", length=50, nullable=true)
      */
     protected $idErp;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     protected $description;
@@ -93,7 +97,7 @@ abstract class Characteristic implements CharacteristicInterface
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $slug;
@@ -111,7 +115,7 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @return mixed
      */
-    public function getValuesCollection()
+    public function getValuesCollection(): Collection
     {
         return $this->valuesCollection;
     }
@@ -119,17 +123,13 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @param mixed $valuesCollection
      */
-    public function setValuesCollection($valuesCollection)
+    public function setValuesCollection(array $valuesCollection)
     {
         $this->valuesCollection = $valuesCollection;
     }
 
 
-
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -147,7 +147,7 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function setCharOptionType(int $charOptionType)
     {
-        if(!in_array($charOptionType, [self::OPTION_VIEW_TYPE_RADIO, self::OPTION_VIEW_TYPE_SELECT])){
+        if (!in_array($charOptionType, [self::OPTION_VIEW_TYPE_RADIO, self::OPTION_VIEW_TYPE_SELECT])) {
             throw new \InvalidArgumentException("Invalid Characteristic option type");
         }
         $this->charOptionType = $charOptionType;
@@ -156,7 +156,7 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @return string
      */
-    public function getIdErp(): string
+    public function getIdErp(): ?string
     {
         return $this->idErp;
     }
@@ -172,7 +172,7 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -188,7 +188,7 @@ abstract class Characteristic implements CharacteristicInterface
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -206,7 +206,7 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function isActive(): bool
     {
-        return $this->active;
+        return $this->active ? true : false;
     }
 
     /**
@@ -222,7 +222,7 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function isOnSearch(): bool
     {
-        return $this->onSearch;
+        return $this->onSearch ? true : false;;
     }
 
     /**
@@ -238,7 +238,7 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function isOnIndex(): bool
     {
-        return $this->onIndex;
+        return $this->onIndex ? true : false;;
     }
 
     /**
@@ -254,7 +254,7 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function isVisible(): bool
     {
-        return $this->isVisible;
+        return $this->isVisible ? true : false;;
     }
 
     /**
@@ -265,23 +265,8 @@ abstract class Characteristic implements CharacteristicInterface
         $this->isVisible = $isVisible;
     }
 
-    /**
-     * @return MttCatalogCharOptionType
-     */
-    public function getOption(): int
-    {
-        return $this->option;
-    }
 
-    public function setOption(int $option)
-    {
-        $this->option = $option;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -291,21 +276,11 @@ abstract class Characteristic implements CharacteristicInterface
      */
     public function setSlug(string $slug)
     {
-        $this->slug= $slug;
+        $this->slug = $slug;
     }
 
-
-/*    public function removeCharValue($value)
+    public function __toString()
     {
-        $this->getCharValues()->removeElement($value);
-    }
-
-    public function attachCharValue($value)
-    {
-        $this->getCharValues()->add($value);
-    }*/
-
-    public function __toString(){
         return $this->getName();
     }
 

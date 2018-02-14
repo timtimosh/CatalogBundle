@@ -2,14 +2,8 @@
 
 namespace Mtt\CatalogBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\View\TwitterBootstrap3View;
-
-use LittleHouse\CatalogBundle\Entity\Product;
 
 /**
  * Product controller.

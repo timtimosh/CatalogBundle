@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Mtt\CatalogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\MappedSuperclass
@@ -17,6 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class Product implements Entity\ProductInterface
 {
+    const PRODUCT_ALIAS = 'mtt_catalog.product_entity';
     const ONSITE = 1;
     const NOT_ONSITE = 0;
 
@@ -37,14 +40,14 @@ abstract class Product implements Entity\ProductInterface
      *
      * @ORM\Column(name="id_erp", type="string", length=50, nullable=true)
      */
-    protected $idErp = '';
+    protected $idErp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="sku", type="string", length=50, nullable=true)
      */
-    protected $sku = '';
+    protected $sku;
 
     /**
      * @var boolean
@@ -75,22 +78,20 @@ abstract class Product implements Entity\ProductInterface
     protected $sortOrder = 0;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="price", type="decimal", precision=15, scale=2, nullable=true)
+     * @var float
+     * @Assert\Type(type="float", message="The value {{ value }} is not a valid {{ type }}.")
+     * @ORM\Column(name="price", type="float", scale=2, nullable=true)
      */
-    protected $price = '0.00';
+    protected $price = 0.00;
 
     /**
      * @var datetime
-     *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     protected $createdAt;
 
     /**
      * @var datetime
-     *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     protected $updatedAt;
@@ -108,8 +109,8 @@ abstract class Product implements Entity\ProductInterface
      * Many Product have Many Characteristics value.
      * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface", fetch="EXTRA_LAZY", cascade={"persist"})
      * @ORM\JoinTable(name="mtt_catalog_product_characteristic_values",
-     *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="char_value", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="char_value", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $characteristicsValues;
@@ -176,8 +177,8 @@ abstract class Product implements Entity\ProductInterface
      * Many products have Many categories.
      * @ORM\ManyToMany(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface", fetch="EXTRA_LAZY", cascade={"persist"})
      * @ORM\JoinTable(name="mtt_catalog_product_to_category",
-     *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="category", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="product", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $categories;
@@ -199,21 +200,22 @@ abstract class Product implements Entity\ProductInterface
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="slug", type="string", length=100, nullable=false)
      */
     protected $slug;
 
 
     /**
      * One Page has One parent Page.
-     * @ORM\OneToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
+     * @ORM\ManyToOne(targetEntity="Mtt\Core\Interfaces\Catalog\Entity\ProductInterface")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
     /**
-    * @ORM\Column(type="string", length=20, nullable=false)
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=20, nullable=false)
     */
     protected $type;
 
@@ -227,7 +229,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return mixed
      */
-    public function getType():string
+    public function getType():?string
     {
         return $this->type;
     }
@@ -249,7 +251,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getSlug()
+    public function getSlug():?string
     {
         return $this->slug;
     }
@@ -257,7 +259,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $slug
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug)
     {
         $this->slug = $slug;
     }
@@ -265,7 +267,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return mixed
      */
-    public function getParent()
+    public function getParent(): ?Entity\ProductInterface
     {
         return $this->parent;
     }
@@ -273,7 +275,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param mixed $parent
      */
-    public function setParent($parent)
+    public function setParent(Entity\ProductInterface $parent)
     {
         $this->parent = $parent;
     }
@@ -298,17 +300,17 @@ abstract class Product implements Entity\ProductInterface
         }
     }
 
-    public function getMainImageFile()
+    public function getMainImageFile():?File
     {
         return $this->mainImageFile;
     }
 
     public function setMainImage($image)
     {
-        $this->mainImage= $image;
+        $this->mainImage = $image;
     }
 
-    public function getMainImage()
+    public function getMainImage(): ?string
     {
         return $this->mainImage;
     }
@@ -322,16 +324,18 @@ abstract class Product implements Entity\ProductInterface
         return $this->categories;
     }
 
-    public function setCategories($characteristicsValues)
+    public function setCategories(array $categories)
     {
-        foreach ($characteristicsValues as $charValue){
-            $this->addCharacteristicsValues($charValue);
+        foreach ($categories as $category){
+            $this->addCategory($category);
         }
 
     }
 
     public function addCategory(Entity\CategoryInterface $category){
-        $this->categories->add($category);
+        if (!$this->getCategories()->contains($category)) {
+            $this->categories->add($category);
+        }
     }
 
     public function removeCategory(Entity\CategoryInterface $category){
@@ -351,7 +355,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param array|Collection $characteristics
      */
-    public function setCharacteristicsValues($characteristicsValues)
+    public function setCharacteristicsValues(array $characteristicsValues)
     {
         foreach ($characteristicsValues as $charValue){
             $this->addCharacteristicsValues($charValue);
@@ -360,7 +364,9 @@ abstract class Product implements Entity\ProductInterface
     }
 
     public function addCharacteristicsValues(Entity\CharacteristicValueInterface $charValue){
-        $this->characteristicsValues->add($charValue);
+        if (!$this->getCharacteristicsValues()->contains($charValue)) {
+            $this->characteristicsValues->add($charValue);
+        }
     }
 
     public function removeCharacteristicsValues(Entity\CharacteristicValueInterface $charValue){
@@ -372,7 +378,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getIdErp(): string
+    public function getIdErp(): ?string
     {
         return $this->idErp;
     }
@@ -388,7 +394,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getSku(): string
+    public function getSku(): ?string
     {
         return $this->sku;
     }
@@ -406,7 +412,7 @@ abstract class Product implements Entity\ProductInterface
      */
     public function isOnSite(): bool
     {
-        return $this->onSite;
+        return $this->onSite ? true: false;
     }
 
     /**
@@ -422,7 +428,7 @@ abstract class Product implements Entity\ProductInterface
      */
     public function isOnErp(): bool
     {
-        return $this->onErp;
+        return $this->onErp ? true: false;
     }
 
     /**
@@ -438,7 +444,7 @@ abstract class Product implements Entity\ProductInterface
      */
     public function isActive(): bool
     {
-        return $this->active;
+        return $this->active ? true: false;
     }
 
     /**
@@ -468,7 +474,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getPrice(): string
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -476,7 +482,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $price
      */
-    public function setPrice(string $price)
+    public function setPrice(float $price)
     {
         $this->price = $price;
     }
@@ -494,7 +500,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -502,7 +508,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return datetime
      */
-    public function getCreatedAt()
+    public function getCreatedAt():?\DateTime
     {
         return $this->createdAt;
     }
@@ -510,7 +516,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return datetime
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt():?\DateTime
     {
         return $this->updatedAt;
     }
@@ -518,7 +524,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -526,7 +532,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -534,7 +540,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getNameAlt()
+    public function getNameAlt(): ?string
     {
         return $this->nameAlt;
     }
@@ -542,7 +548,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $nameAlt
      */
-    public function setNameAlt($nameAlt)
+    public function setNameAlt(string $nameAlt)
     {
         $this->nameAlt = $nameAlt;
     }
@@ -550,7 +556,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
@@ -558,7 +564,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(string $seoTitle)
     {
         $this->seoTitle = $seoTitle;
     }
@@ -566,7 +572,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
@@ -574,7 +580,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(string $seoH1)
     {
         $this->seoH1 = $seoH1;
     }
@@ -582,7 +588,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -590,7 +596,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
@@ -598,7 +604,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getShortDescription(): string
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
@@ -616,7 +622,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getMetaDescription()
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
@@ -624,7 +630,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $metaDescription
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(string $metaDescription)
     {
         $this->metaDescription = $metaDescription;
     }
@@ -632,7 +638,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @return string
      */
-    public function getMetaKeyword()
+    public function getMetaKeyword(): ?string
     {
         return $this->metaKeyword;
     }
@@ -640,7 +646,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $metaKeyword
      */
-    public function setMetaKeyword($metaKeyword)
+    public function setMetaKeyword(string $metaKeyword)
     {
         $this->metaKeyword = $metaKeyword;
     }

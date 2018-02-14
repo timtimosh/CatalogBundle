@@ -25,6 +25,17 @@ easy_admin:
         Categories:
             class: '%mtt_catalog.category_entity%'
             list:
+                fields: ['id', 'slug', 'idErp', 'name', 'parent']
+            form:
+                fields:
+                    - idErp
+                    - name
+                    - { property: 'descriptionShort', type: 'ckeditor' }
+                    - { property: 'description', type: 'ckeditor' }
+                    - slug
+                    - template
+                    - parent
+            list:
                 fields: ['id', 'name', 'slug', 'active']
         Characteristics:
             class: '%mtt_catalog.characteristic_entity%'
@@ -42,4 +53,4 @@ easy_admin:
         CharacteristicValues:
             class: '%mtt_catalog.characteristic_value_entity%'
             list:
-                fields: ['id', 'name', 'slug', 'active']
+                fields: ['id', 'name', 'slug']

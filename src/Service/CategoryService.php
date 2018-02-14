@@ -4,12 +4,10 @@ namespace Mtt\CatalogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use LittleHouse\EasyPageBundle\Entity\Page;
-use Mtt\CatalogBundle\Entity\Product;
-use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ProductService
+class CategoryService
 {
     protected $em;
 
@@ -31,14 +29,14 @@ class ProductService
     /**
      * @return Page
      */
-    public function createProduct()
+    public function createCategory()
     {
         return new $this->classEntity;
     }
 
 
-    public function getProductUrl(ProductInterface $entity):string{
-        return $this->router->generate('catalog_product_show', array('slug' => $entity->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL);
+    public function getCategoryUrl(CategoryInterface $entity):string{
+        return $this->router->generate('catalog_category_list', array('slug' => $entity->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
 }
