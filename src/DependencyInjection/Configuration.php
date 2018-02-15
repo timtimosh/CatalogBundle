@@ -20,13 +20,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
                     ->scalarNode('product_entity')->isRequired()->cannotBeEmpty()->end()
-                    ->scalarNode('category_entity')->defaultNull()->cannotBeEmpty()->end()
-                    ->scalarNode('characteristic_entity')->defaultNull()->cannotBeEmpty()->end()
-                    ->scalarNode('characteristic_value_entity')->defaultNull()->cannotBeEmpty()->end()
-                    ->scalarNode('product_on_page')->defaultNull()->cannotBeEmpty()->end()
-                    ->scalarNode('image_path')->defaultNull()->cannotBeEmpty()->end()
+                    ->scalarNode('category_entity')->isRequired()->cannotBeEmpty()->end()
+                    ->scalarNode('characteristic_entity')->isRequired()->cannotBeEmpty()->end()
+                    ->scalarNode('characteristic_value_entity')->isRequired()->cannotBeEmpty()->end()
+                    ->arrayNode('products_per_page')->scalarPrototype()->isRequired()->end()->end()
+                    ->scalarNode('default_product_limit')->cannotBeEmpty()->end()
+                    ->scalarNode('image_path')->defaultNull()->isRequired()->cannotBeEmpty()->end()
 
-                    ->scalarNode('easy_admin_integration')->defaultNull()
+                    ->scalarNode('easy_admin_integration')->defaultFalse()
                 ->end()
             ->end();
 

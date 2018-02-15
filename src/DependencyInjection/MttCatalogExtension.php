@@ -30,12 +30,12 @@ class MttCatalogExtension extends Extension implements PrependExtensionInterface
     {
         $configs = $container->getExtensionConfig($this->getAlias());
         $myBundleConfig = $this->processConfiguration(new Configuration(), $configs);
-
         $container->setParameter(Product::PRODUCT_ALIAS, $myBundleConfig['product_entity']);
         $container->setParameter(Category::CATEGORY_ALIAS, $myBundleConfig['category_entity']);
         $container->setParameter(Characteristic::CHARACTERISTIC_ALIAS, $myBundleConfig['characteristic_entity']);
         $container->setParameter(CharacteristicValue::CHARACTERISTIC_VALUES_ALIAS, $myBundleConfig['characteristic_value_entity']);
-        $container->setParameter('mtt_catalog.products_per_page', $myBundleConfig['product_on_page']);
+        $container->setParameter('mtt_catalog.products_per_page', $myBundleConfig['products_per_page']);
+        $container->setParameter('mtt_catalog.default_product_limit', $myBundleConfig['default_product_limit']);
 
         $container->setParameter('mtt_catalog.image_path_to_product', $myBundleConfig['image_path'].'/product');
 

@@ -1,3 +1,5 @@
+parameters:
+
 services:
    mtt_catalog.product.service:
         class: Mtt\CatalogBundle\Service\ProductService

@@ -220,11 +220,35 @@ abstract class Product implements Entity\ProductInterface
     protected $type;
 
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer")
+     */
+    protected $quantity = 0;
+
     public function __construct()
     {
         $this->characteristicsValues = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
+
+    /**
+     * @return int
+     */
+    public function getQuantity():int
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param int $quantity
+     */
+    public function setQuantity(int $quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
 
     /**
      * @return mixed

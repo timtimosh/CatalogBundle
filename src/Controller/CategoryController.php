@@ -11,8 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class CategoryController extends Controller
 {
-    const PRODUCTS_PER_PAGE = 10;
-
     use RepositoriesTrait;
 
 
@@ -41,12 +39,13 @@ class CategoryController extends Controller
         $pagination = $paginator->paginate(
             $productCollection, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            $this->getLimit()/*limit per page*/
+            $this->getCurrentLimit($request)/*limit per page*/
         );
 
         return $this->render('@catalog_templates/product/list.html.twig',
             array(
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'aviableLimits' => $this->getProductPerPageLimits()
             )
         );
     }
@@ -56,9 +55,15 @@ class CategoryController extends Controller
     }
 
 
-    protected function getLimit(): int
+    protected function getCurrentLimit(Request $request): int
     {
-        return $this->getParameter('mtt_catalog.products_per_page');
+        if($request->get('limit')) {
+            return $request->get('limit');
+        }
+        return $this->container->getParameter('mtt_catalog.default_product_limit');
     }
 
+    public function getProductPerPageLimits(){
+        return $this->container->getParameter('mtt_catalog.products_per_page');
+    }
 }

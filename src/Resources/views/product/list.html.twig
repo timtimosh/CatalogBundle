@@ -1,31 +1,103 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-    {# total items count #}
-    <div class="count">
-        {{ pagination.getTotalItemCount }}
+
+    <div class="x_panel products-list">
+        <div class="x_title">
+            <h1>{% trans %}Products{% endtrans %}</h1>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <p>{% trans %}Total{% endtrans %}: <code>{{ pagination.getTotalItemCount }}</code></p>
+            <div class="dataTables_wrapper">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="dataTables_length" id="datatable_length">
+                            <label> {% trans %}Show{% endtrans %}
+                                <select class="form-control input-sm" onchange="changeProductsLimit(this)">
+                                    {% for limit in aviableLimits %}
+                                        <option {% if limit == pagination.getItemNumberPerPage()  %} selected {% endif %}value="{{ limit }}">{{ limit }}</option>
+                                    {% endfor %}
+                                </select> {% trans %}entries{% endtrans %}</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                                {{ knp_pagination_filter(pagination, {'p.name': 'Name', 'p.sku': 'Sku'}) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered bulk_action dataTable products-list">
+                        <thead>
+                        <tr class="headings">
+                            <th>
+                                <input type="checkbox" id="check-all" class="flat">
+                            </th>
+                            <th>{% trans %}Image{% endtrans %}</th>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <th>{% trans %}Sku{% endtrans %}</th>
+                            <th class="
+                        {% if pagination.isSorted('p.price') %}
+                            sorting_{{ pagination.getDirection() }} {% else %} sorting
+                        {% endif %}">
+                                {{ knp_pagination_sortable(pagination, 'Price', 'p.price') }}
+                            </th>
+                            <th class="{% if pagination.isSorted('p.quantity') %} sorting_{{ pagination.getDirection() }} {% else %} sorting {% endif %}">
+                                {{ knp_pagination_sortable(pagination, 'Quantity', 'p.quantity') }}
+                            </th>
+                            <th>{% trans %}Actions{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in pagination %}
+                            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                                <td class="a-center ">
+                                    <input type="checkbox" class="flat" name="table_records">
+                                </td>
+                                <td>
+                                    {% if vich_uploader_asset(item, 'mainImageFile') != null %}
+                                        <img src="{{ asset(vich_uploader_asset(item, 'mainImageFile')) | imagine_filter('easypage_show_thumb') }}"
+                                             alt="{{ item.name }}">
+                                    {% endif %}
+                                </td>
+                                <td><a href="{{ mtt_catalog_product_service.getProductUrl(item) }}">{{ item.name }}</a>
+                                </td>
+                                <td>{{ item.sku }}</td>
+                                <td>{{ item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <table class="table">
-        <tr>
-            {# sorting of properties based on query components #}
-            <th>{{ knp_pagination_sortable(pagination, 'Id', 'p.id') }}</th>
-            <th{% if pagination.isSorted('p.name') %} class="sorted"{% endif %}>
-                {{ knp_pagination_sortable(pagination, 'Name', 'p.name') }}
-            </th>
-            <th>{{ knp_pagination_sortable(pagination, 'Release', 'p.updatedAt') }}</th>
-        </tr>
-
-        {# table body #}
-        {% for item in pagination %}
-            <tr {% if loop.index is odd %}class="color"{% endif %}>
-                <td>{{ item.id }}</td>
-                <td><a href="{{ mtt_catalog_product_service.getProductUrl(item) }}">{{ item.name }}</a></td>
-                <td>{{ item.updatedAt|date("m/d/Y", false) }}</td>
-
-            </tr>
-        {% endfor %}
-    </table>
-    {# display navigation #}
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        function changeProductsLimit(limitElement) {
+            var changeParamByName = function (href, newVal) {
+                var new_url = href.replace(/(limit=).*?(&)/,'$1' + newVal + '$2');
+                console.log('before change: '+ new_url);
+                if (new_url === href) {
+                    new_url += href.indexOf('?') === -1 ? '?' : '&';
+                    new_url += 'limit=' + newVal;
+                }
+                console.log('after change'+ new_url);
+                return new_url;
+            }
+
+            changeParamByName('{{ app.request.uri }}', limitElement.value);
+        }
+    </script>
 {% endblock %}
