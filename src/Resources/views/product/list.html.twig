@@ -15,14 +15,16 @@
                             <label> {% trans %}Show{% endtrans %}
                                 <select class="form-control input-sm" onchange="changeProductsLimit(this)">
                                     {% for limit in aviableLimits %}
-                                        <option {% if limit == pagination.getItemNumberPerPage()  %} selected {% endif %}value="{{ limit }}">{{ limit }}</option>
+                                        <option {% if limit == pagination.getItemNumberPerPage() %} selected
+                                         {% endif %}value="{{ limit }}">{{ limit }}
+                                        </option>
                                     {% endfor %}
                                 </select> {% trans %}entries{% endtrans %}</label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">
-                                {{ knp_pagination_filter(pagination, {'p.name': 'Name', 'p.sku': 'Sku'}) }}
+                            {{ knp_pagination_filter(pagination, {'p.name': 'Name', 'p.sku': 'Sku'}) }}
                         </div>
                     </div>
                 </div>
@@ -56,18 +58,19 @@
                                     <input type="checkbox" class="flat" name="table_records">
                                 </td>
                                 <td>
-                                    {% if vich_uploader_asset(item, 'mainImageFile') != null %}
-                                        <img src="{{ asset(vich_uploader_asset(item, 'mainImageFile')) | imagine_filter('easypage_show_thumb') }}"
-                                             alt="{{ item.name }}">
-                                    {% endif %}
+                                    <img src="{{ asset(mtt_catalog_product_service.getProductMainImgPath(item)) | imagine_filter('mtt_catalog_list_thumb') }}" alt="{{ item.name }}">
                                 </td>
                                 <td><a href="{{ mtt_catalog_product_service.getProductUrl(item) }}">{{ item.name }}</a>
                                 </td>
                                 <td>{{ item.sku }}</td>
-                                <td>{{ item.price }}</td>
+                                <td>{{ mtt_catalog_product_service.formatPrice(mtt_catalog_product_service.getPrice(item)) }}</td>
                                 <td>{{ item.quantity }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                    <form class="form-inline">
+                                        <input type="number" class="col-xs-3">
+                                        <div class="col-xs-5"><button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+                                        <a href="{{ mtt_catalog_product_service.getProductUrl(item) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></div>
+                                    </form>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -87,13 +90,13 @@
 
         function changeProductsLimit(limitElement) {
             var changeParamByName = function (href, newVal) {
-                var new_url = href.replace(/(limit=).*?(&)/,'$1' + newVal + '$2');
-                console.log('before change: '+ new_url);
+                var new_url = href.replace(/(limit=).*?(&)/, '$1' + newVal + '$2');
+                console.log('before change: ' + new_url);
                 if (new_url === href) {
                     new_url += href.indexOf('?') === -1 ? '?' : '&';
                     new_url += 'limit=' + newVal;
                 }
-                console.log('after change'+ new_url);
+                console.log('after change' + new_url);
                 return new_url;
             }
 

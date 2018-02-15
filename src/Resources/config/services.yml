@@ -7,6 +7,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '%mtt_catalog.product_entity%'
             - '@router.default'
+            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
    mtt_catalog.category.service:
         class: Mtt\CatalogBundle\Service\CategoryService
         arguments:
