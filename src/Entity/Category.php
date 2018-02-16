@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace Mtt\CatalogBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\MappedSuperclass
+ * @Vich\Uploadable
  */
 abstract class Category implements CategoryInterface
 {
@@ -119,10 +122,94 @@ abstract class Category implements CategoryInterface
     protected $template;
 
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    protected $mainImage;
+
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * @Vich\UploadableField(mapping="mtt_catalog_product_image", fileNameProperty="mainImage")
+     * @var File
+     */
+    protected $mainImageFile;
+
+    /**
+     * @var datetime
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    protected $createdAt;
+
+    /**
+     * @var datetime
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    protected $updatedAt;
+
     public function __construct()
     {
         // $this->products = new ArrayCollection();
     }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|UploadedFile $image
+     */
+    public function setMainImageFile(?File $image = null)
+    {
+        $this->mainImageFile = $image;
+        if (null !== $image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedTimestamps();
+        }
+    }
+
+    public function updatedTimestamps()
+    {
+        $this->updatedAt = new \DateTime('now');
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return datetime
+     */
+    public function getCreatedAt():?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return datetime
+     */
+    public function getUpdatedAt():?\DateTime
+    {
+        return $this->updatedAt;
+    }
+    
+    public function getMainImageFile():?File
+    {
+        return $this->mainImageFile;
+    }
+
+    public function setMainImage($image)
+    {
+        $this->mainImage = $image;
+    }
+
+    public function getMainImage(): ?string
+    {
+        return $this->mainImage;
+    }
+
 
     /**
      * @return string
