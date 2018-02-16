@@ -30,11 +30,14 @@ easy_admin:
                 fields:
                     - idErp
                     - name
+                    - { property: 'mainImageFile', type: 'vich_image' }
                     - { property: 'descriptionShort', type: 'ckeditor' }
                     - { property: 'description', type: 'ckeditor' }
                     - slug
                     - template
                     - parent
+                    - seoTitle
+                    - seoH1
             list:
                 fields: ['id', 'name', 'slug', 'active']
         Characteristics:

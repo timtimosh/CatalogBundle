@@ -1,40 +1,39 @@
 <?php
+declare(strict_types=1);
 
 namespace Mtt\CatalogBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+
 use LittleHouse\EasyPageBundle\Entity\Page;
-use Mtt\CatalogBundle\Entity\Product;
+use Mtt\CatalogBundle\Service\Product\ImagerService;
+use Mtt\CatalogBundle\Service\Product\PricerService;
+use Mtt\CatalogBundle\Service\Product\SeoService;
+use Mtt\CatalogBundle\Service\Product\SluggerService;
 use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ProductService
 {
-    protected $em;
-
     protected $classEntity;
-    protected $router;
-    /**
-     * @var \Vich\UploaderBundle\Templating\Helper\UploaderHelper
-     */
-    protected $vichUploaderHelperService;
-    /**
-     * Page constructor.
-     * @param EntityManager $entityManager
-     * @param $classEntity string
-     */
+
+    protected $productSluggerService;
+    protected $productPricerService;
+    protected $productImagerService;
+    protected $productSeoService;
+
+
     public function __construct(
-        EntityManager $entityManager,
-        $classEntity,
-        \Symfony\Component\Routing\RouterInterface $router,
-        \Vich\UploaderBundle\Templating\Helper\UploaderHelper $vichUploaderHelper
+        string $classEntity,
+        SluggerService $productSluggerService,
+        PricerService $productPricerService,
+        ImagerService $productImagerService,
+        SeoService $productSeoService
     )
     {
-        $this->vichUploaderHelperService = $vichUploaderHelper;
-        $this->em = $entityManager;
         $this->classEntity = $classEntity;
-        $this->router = $router;
+        $this->productSluggerService = $productSluggerService;
+        $this->productPricerService = $productPricerService;
+        $this->productImagerService = $productImagerService;
+        $this->productSeoService = $productSeoService;
     }
 
     /**
@@ -46,35 +45,26 @@ class ProductService
     }
 
 
-    public function getProductUrl(ProductInterface $entity):string{
-        return $this->router->generate('catalog_product_show', array('slug' => $entity->getSlug()), UrlGeneratorInterface::ABSOLUTE_URL);
+    public function getProductUrl(ProductInterface $entity): string
+    {
+        return $this->productSluggerService->getProductUrl($entity);
     }
 
-    /**
-     * @param Product $entity
-     * @return string
-     */
-    public function getProductMainImgPath(ProductInterface $entity):string{
-        $image = null;
-        if(null !== $entity->getMainImage()) {
-            $image = $this->vichUploaderHelperService->asset($entity, 'mainImageFile');
-        }
 
-        if(null === $image){
-            $image = 'bundles/mttcatalog/images/placeholder.jpg';
-        }
-        return $image;
-    }
-    /**
-     * @param Product $entity
-     * @return float
-     */
-    public function getPrice(ProductInterface $entity):float{
-        return (float) $entity->getPrice();
+    public function getProductMainImgPath(ProductInterface $entity): string
+    {
+        return $this->productImagerService->getProductMainImgPath($entity);
     }
 
-    public function formatPrice(float $price){
-        return $price.' грн';
+
+    public function getPrice(ProductInterface $entity): float
+    {
+        return $this->productPricerService->getPrice($entity);
+    }
+
+    public function formatPrice(float $price):string
+    {
+        return $this->productPricerService->formatPrice($price);
     }
 
 }

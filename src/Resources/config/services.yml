@@ -1,19 +1,40 @@
 parameters:
 
 services:
+   mtt_catalog.product_imager.service:
+        class: Mtt\CatalogBundle\Service\Product\ImagerService
+        arguments:
+            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
+
+   mtt_catalog.product_pricer.service:
+        class: Mtt\CatalogBundle\Service\Product\PricerService
+
+   mtt_catalog.product_seo.service:
+        class: Mtt\CatalogBundle\Service\Product\SeoService
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+   mtt_catalog.product_slugger.service:
+        class: Mtt\CatalogBundle\Service\Product\SluggerService
+        arguments:
+            - '@router.default'
+
    mtt_catalog.product.service:
         class: Mtt\CatalogBundle\Service\ProductService
         arguments:
-            - '@doctrine.orm.entity_manager'
             - '%mtt_catalog.product_entity%'
-            - '@router.default'
-            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
+            - '@mtt_catalog.product_slugger.service'
+            - '@mtt_catalog.product_pricer.service'
+            - '@mtt_catalog.product_imager.service'
+            - '@mtt_catalog.product_seo.service'
+
    mtt_catalog.category.service:
         class: Mtt\CatalogBundle\Service\CategoryService
         arguments:
             - '@doctrine.orm.entity_manager'
             - '%mtt_catalog.category_entity%'
             - '@router.default'
+
    mtt_catalog.doctrine.product_listener:
         class: Mtt\CatalogBundle\Listeners\Doctrine\ProductListener
         arguments:
