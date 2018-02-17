@@ -194,7 +194,6 @@ abstract class Category implements CategoryInterface
     {
         return $this->updatedAt;
     }
-    
     public function getMainImageFile():?File
     {
         return $this->mainImageFile;

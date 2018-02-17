@@ -1,6 +1,18 @@
 parameters:
 
 services:
+   mtt_catalog.product_repository.service:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - '%mtt_catalog.product_entity%'
+
+   mtt_catalog.category_repository.service:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - '%mtt_catalog.category_entity%'
+
    mtt_catalog.product_imager.service:
         class: Mtt\CatalogBundle\Service\Product\ImagerService
         arguments:
@@ -46,6 +58,8 @@ services:
         class: Mtt\CatalogBundle\Listeners\Doctrine\CategoryListener
         arguments:
             - '@cocur_slugify'
+            - '@mtt_catalog.category_repository.service'
+            - '@mtt_catalog.product_repository.service'
         tags:
             - { name: doctrine.orm.entity_listener }
 

@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vladimirtimosenko
- * Date: 07.02.18
- * Time: 15:27
- */
-
 namespace Mtt\CatalogBundle\Controller;
 
-
+use Mtt\CatalogBundle\Entity\Category;
+use Mtt\CatalogBundle\Entity\Product;
 use Mtt\CatalogBundle\Repository\CategoryRepository;
 use Mtt\CatalogBundle\Repository\ProductRepository;
 
@@ -17,14 +11,14 @@ trait RepositoriesTrait
     protected function getProductRepository(): ProductRepository
     {
         return $this->getEntityRepository(
-            $this->getParameter('mtt_catalog.product_entity')
+            $this->getParameter(Product::PRODUCT_ALIAS)
         );
     }
 
     protected function getCategoryRepository(): CategoryRepository
     {
         return $this->getEntityRepository(
-            $this->getParameter('mtt_catalog.category_entity')
+            $this->getParameter(Category::CATEGORY_ALIAS)
         );
     }
 

@@ -36,13 +36,13 @@ class CategoryRepository extends EntityRepository
     /**
      * @param $qb QueryBuilder
      */
-    protected function activeQuery($qb){
+    public function activeQuery($qb){
         $qb->where('c.active = :active');
         // ->andWhere('f.end <= :end')
         $qb->setParameter('active', Category::CATEGORY_ACTIVE);
     }
 
-    protected function createCategoryQuery(){
+    public function createCategoryQuery(){
         $qb = $this->_em->createQueryBuilder();
         $qb->select('c')
             ->from($this->_entityName, 'c');

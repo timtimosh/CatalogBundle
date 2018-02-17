@@ -2,6 +2,8 @@
 namespace Mtt\CatalogBundle\DependencyInjection\Compiler;
 
 use Doctrine\ORM\Version;
+use Mtt\CatalogBundle\Entity\Category;
+use Mtt\CatalogBundle\Entity\Product;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -16,8 +18,8 @@ class DoctrineResolveTargetEntityPass implements CompilerPassInterface
         $definition = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
 
         $interfaces = [
-            'Mtt\Core\Interfaces\Catalog\Entity\ProductInterface' => $container->getParameter('mtt_catalog.product_entity'),
-            'Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface' => $container->getParameter('mtt_catalog.category_entity'),
+            'Mtt\Core\Interfaces\Catalog\Entity\ProductInterface' => $container->getParameter(Product::PRODUCT_ALIAS),
+            'Mtt\Core\Interfaces\Catalog\Entity\CategoryInterface' => $container->getParameter(Category::CATEGORY_ALIAS),
             'Mtt\Core\Interfaces\Catalog\Entity\CharacteristicInterface' => $container->getParameter('mtt_catalog.characteristic_entity'),
             'Mtt\Core\Interfaces\Catalog\Entity\CharacteristicValueInterface' => $container->getParameter('mtt_catalog.characteristic_value_entity')
         ];

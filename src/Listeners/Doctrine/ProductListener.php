@@ -3,6 +3,7 @@ namespace Mtt\CatalogBundle\Listeners\Doctrine;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Mtt\CatalogBundle\Entity\Product;
 use Mtt\Core\Interfaces\Catalog\Entity\ProductInterface;
 
 class ProductListener
@@ -36,7 +37,9 @@ class ProductListener
         }
     }
 
-
+    /**
+     * @param Product $entity
+     */
     protected function productTypeCheck(ProductInterface $entity){
         if($entity->getParent()){
             $entity->setType($entity::PRODUCT_TYPE_COMPLEX);
