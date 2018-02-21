@@ -6,6 +6,7 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - '%mtt_catalog.product_entity%'
+        public: true
 
    mtt_catalog.category_repository.service:
         class: Doctrine\ORM\EntityRepository

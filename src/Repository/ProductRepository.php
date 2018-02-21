@@ -4,8 +4,9 @@ namespace Mtt\CatalogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Mtt\CatalogBundle\Entity\Product;
+use Mtt\Core\Interfaces\Catalog\Repository\ProductRepositoryInterface;
 
-class ProductRepository extends EntityRepository
+class ProductRepository extends EntityRepository implements ProductRepositoryInterface
 {
     public function findAllActive($limit = 0)
     {
