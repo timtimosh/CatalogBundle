@@ -426,7 +426,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $sku
      */
-    public function setSku(string $sku)
+    public function setSku(?string $sku)
     {
         $this->sku = $sku;
     }
@@ -556,7 +556,7 @@ abstract class Product implements Entity\ProductInterface
     /**
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName(?string $name)
     {
         $this->name = $name;
     }
