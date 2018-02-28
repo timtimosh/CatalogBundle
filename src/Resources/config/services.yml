@@ -6,7 +6,7 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - '%mtt_catalog.product_entity%'
-        public: true
+
 
    mtt_catalog.category_repository.service:
         class: Doctrine\ORM\EntityRepository
@@ -14,23 +14,28 @@ services:
         arguments:
             - '%mtt_catalog.category_entity%'
 
+
    mtt_catalog.product_imager.service:
         class: Mtt\CatalogBundle\Service\Product\ImagerService
         arguments:
             - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
 
+
    mtt_catalog.product_pricer.service:
         class: Mtt\CatalogBundle\Service\Product\PricerService
+
 
    mtt_catalog.product_seo.service:
         class: Mtt\CatalogBundle\Service\Product\SeoService
         arguments:
             - '@doctrine.orm.entity_manager'
 
+
    mtt_catalog.product_slugger.service:
         class: Mtt\CatalogBundle\Service\Product\SluggerService
         arguments:
             - '@router.default'
+
 
    mtt_catalog.product.service:
         class: Mtt\CatalogBundle\Service\ProductService
@@ -40,6 +45,7 @@ services:
             - '@mtt_catalog.product_pricer.service'
             - '@mtt_catalog.product_imager.service'
             - '@mtt_catalog.product_seo.service'
+
 
    mtt_catalog.category.service:
         class: Mtt\CatalogBundle\Service\CategoryService
@@ -53,7 +59,8 @@ services:
         arguments:
             - '@cocur_slugify'
         tags:
-            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, lazy: true }
+
 
    mtt_catalog.doctrine.category_listener:
         class: Mtt\CatalogBundle\Listeners\Doctrine\CategoryListener
@@ -62,21 +69,22 @@ services:
             - '@mtt_catalog.category_repository.service'
             - '@mtt_catalog.product_repository.service'
         tags:
-            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, lazy: true }
 
    mtt_catalog.doctrine.characteristic_listener:
         class: Mtt\CatalogBundle\Listeners\Doctrine\CharacteristicListener
         arguments:
             - '@cocur_slugify'
         tags:
-            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, lazy: true }
 
    mtt_catalog.doctrine.characteristic_value_listener:
         class: Mtt\CatalogBundle\Listeners\Doctrine\CharacteristicValueListener
         arguments:
             - '@cocur_slugify'
         tags:
-            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, lazy: true }
+
 
    mtt_catalog.product.filter_service:
         class: Mtt\CatalogBundle\Service\ProductFilterService
